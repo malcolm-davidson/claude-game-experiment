@@ -103,11 +103,23 @@ Open `http://localhost:8080` in your browser.
 
 ### Controls
 
+**Keyboard (desktop)**
+
 | Key | Action |
 |-----|--------|
 | Arrow keys | Move dragon |
 | Z | Fire |
 | R | Restart (after game over) |
+
+**Touch (iOS / Android)**
+
+| Gesture | Action |
+|---------|--------|
+| Touch and drag | Dragon follows your finger |
+| Holding touch | Auto-fires continuously |
+| Tap (after game over) | Restart |
+
+The game auto-detects the input method — no configuration needed.
 
 ### Build for production
 

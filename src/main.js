@@ -5,9 +5,13 @@ import { UIScene } from './scenes/UIScene.js';
 
 const config = {
   type: Phaser.AUTO,
-  width: 480,
-  height: 640,
   backgroundColor: '#0a0005',
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    width: 480,
+    height: 640,
+  },
   physics: {
     default: 'arcade',
     arcade: {
