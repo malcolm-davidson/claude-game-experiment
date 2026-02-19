@@ -2,6 +2,12 @@ import { Player } from '../entities/Player.js';
 import { EnemyWyvern } from '../entities/EnemyWyvern.js';
 import { WaveManager } from '../systems/WaveManager.js';
 import { LootSystem } from '../systems/LootSystem.js';
+import {
+  onBulletHitEnemy,
+  onEnemyBulletHitPlayer,
+  onPlayerCollectLoot,
+  cullOffscreenBullets,
+} from '../systems/CollisionHandlers.js';
 
 /**
  * GameScene — core gameplay loop.
@@ -36,10 +42,11 @@ export class GameScene extends Phaser.Scene {
     // Scroll parallax background
     this.bg.tilePositionY -= 0.5;
 
-    // Cull off-screen enemy shots
-    this.enemyBullets.getChildren().forEach(b => {
-      if (b.y > 700) b.destroy();
-    });
+    // Cull off-screen bullets (snapshot arrays first to avoid mutation-during-iteration)
+    cullOffscreenBullets(
+      this.playerBullets.getChildren(),
+      this.enemyBullets.getChildren(),
+    );
   }
 
   // ── Setup helpers ────────────────────────────────────────────────────
@@ -70,29 +77,24 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.overlap(
       this.playerBullets,
       this.enemies,
-      (bullet, enemy) => {
-        bullet.destroy();
-        enemy.takeDamage(this.player.stats.attack);
-      },
+      (bullet, enemySprite) =>
+        onBulletHitEnemy(bullet, enemySprite, this.player.stats.attack),
     );
 
     // Enemy bullets hit player
     this.physics.add.overlap(
       this.enemyBullets,
       this.player.sprite,
-      (playerSprite, bullet) => {
-        bullet.destroy();
-        this.player.takeDamage(1);
-      },
+      (playerSprite, bullet) =>
+        onEnemyBulletHitPlayer(playerSprite, bullet, this.player),
     );
 
     // Player collects loot
     this.physics.add.overlap(
       this.player.sprite,
       this.lootItems,
-      (playerSprite, loot) => {
-        this.lootSystem.collect(loot);
-      },
+      (playerSprite, loot) =>
+        onPlayerCollectLoot(playerSprite, loot, this.lootSystem),
     );
   }
 
