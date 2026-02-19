@@ -115,10 +115,15 @@ export class GameScene extends Phaser.Scene {
       this._moveTouchRing(pointer.x, pointer.y);
     });
 
-    this.input.on('pointerup', () => {
+    // pointerup = normal finger lift
+    // pointercancel = iOS interrupted the touch (multitasking swipe, notification, etc.)
+    // Both must clear touch state, otherwise the touch stays "stuck" open.
+    const onTouchEnd = () => {
       this.player.clearTouchTarget();
       this._hideTouchRing();
-    });
+    };
+    this.input.on('pointerup',     onTouchEnd);
+    this.input.on('pointercancel', onTouchEnd);
 
     // Build the touch-ring graphic (hidden by default)
     this._touchRing = this.add.graphics().setDepth(30).setAlpha(0);
