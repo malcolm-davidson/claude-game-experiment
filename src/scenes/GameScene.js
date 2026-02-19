@@ -99,6 +99,48 @@ export class GameScene extends Phaser.Scene {
   _setupInput() {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.fireKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+
+    // ── Touch / pointer controls ──────────────────────────────────────
+    // Pointer coordinates from Phaser are already in game-space (scaled),
+    // so no coordinate conversion is needed regardless of device pixel ratio.
+
+    this.input.on('pointerdown', (pointer) => {
+      this.player.setTouchTarget(pointer.x, pointer.y);
+      this._showTouchRing(pointer.x, pointer.y);
+    });
+
+    this.input.on('pointermove', (pointer) => {
+      if (!pointer.isDown) return;
+      this.player.setTouchTarget(pointer.x, pointer.y);
+      this._moveTouchRing(pointer.x, pointer.y);
+    });
+
+    this.input.on('pointerup', () => {
+      this.player.clearTouchTarget();
+      this._hideTouchRing();
+    });
+
+    // Build the touch-ring graphic (hidden by default)
+    this._touchRing = this.add.graphics().setDepth(30).setAlpha(0);
+    this._touchRing.lineStyle(2, 0xff9900, 0.7);
+    this._touchRing.strokeCircle(0, 0, 22);
+  }
+
+  _showTouchRing(x, y) {
+    this._touchRing.setPosition(x, y).setAlpha(0.9);
+  }
+
+  _moveTouchRing(x, y) {
+    this._touchRing.setPosition(x, y);
+  }
+
+  _hideTouchRing() {
+    this._touchRing.setAlpha(0);
+  }
+
+  /** Returns true when the primary input is touch (iOS / Android). */
+  isMobile() {
+    return !this.sys.game.device.os.desktop;
   }
 
   // ── Public helpers called by entities/systems ────────────────────────
@@ -120,12 +162,19 @@ export class GameScene extends Phaser.Scene {
       fontStyle: 'bold',
       align: 'center',
     }).setOrigin(0.5);
-    this.add.text(240, 340, 'Press R to restart', {
+    const restartHint = this.isMobile()
+      ? 'Tap to restart'
+      : 'Press R to restart';
+    this.add.text(240, 340, restartHint, {
       fontSize: '16px',
       color: '#aaaaaa',
       align: 'center',
     }).setOrigin(0.5);
     this.input.keyboard.once('keydown-R', () => {
+      this.scene.restart();
+      this.scene.launch('UI');
+    });
+    this.input.once('pointerup', () => {
       this.scene.restart();
       this.scene.launch('UI');
     });

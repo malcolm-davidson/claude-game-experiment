@@ -1,6 +1,10 @@
 /**
  * Player — the dragon rider.
  * Handles movement, shooting, stats, and damage.
+ *
+ * Input modes (both can be active simultaneously):
+ *   Keyboard — arrow keys to move, Z to fire
+ *   Touch    — drag finger to move (dragon follows pointer), auto-fires while touching
  */
 export class Player {
   constructor(scene, x, y) {
@@ -14,7 +18,9 @@ export class Player {
       fireRate: 300, // ms between shots
     };
 
-    this._lastFired = 0;
+    this._lastFired  = 0;
+    this._touchX     = null; // null = no active touch
+    this._touchY     = null;
 
     this.sprite = scene.physics.add.sprite(x, y, 'dragon');
     this.sprite.setCollideWorldBounds(true);
@@ -36,18 +42,49 @@ export class Player {
     const { sprite, stats } = this;
     sprite.setVelocity(0);
 
-    if (cursors.left.isDown)  sprite.setVelocityX(-stats.speed);
-    if (cursors.right.isDown) sprite.setVelocityX(stats.speed);
-    if (cursors.up.isDown)    sprite.setVelocityY(-stats.speed);
-    if (cursors.down.isDown)  sprite.setVelocityY(stats.speed);
+    const isTouching = this._touchX !== null;
+
+    if (isTouching) {
+      // Touch: move dragon toward the finger position
+      const dx   = this._touchX - sprite.x;
+      const dy   = this._touchY - sprite.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > 6) {
+        sprite.setVelocityX((dx / dist) * stats.speed);
+        sprite.setVelocityY((dy / dist) * stats.speed);
+      }
+
+      // Auto-fire while touching
+      if (time > this._lastFired + stats.fireRate) {
+        this._fire(time);
+      }
+    } else {
+      // Keyboard movement
+      if (cursors.left.isDown)  sprite.setVelocityX(-stats.speed);
+      if (cursors.right.isDown) sprite.setVelocityX(stats.speed);
+      if (cursors.up.isDown)    sprite.setVelocityY(-stats.speed);
+      if (cursors.down.isDown)  sprite.setVelocityY(stats.speed);
+
+      // Keyboard fire
+      if (fireKey.isDown && time > this._lastFired + stats.fireRate) {
+        this._fire(time);
+      }
+    }
 
     // Keep thrust emitter attached
     this._thrustEmitter.setPosition(sprite.x, sprite.y + 24);
+  }
 
-    // Shoot
-    if (fireKey.isDown && time > this._lastFired + stats.fireRate) {
-      this._fire(time);
-    }
+  /** Called by GameScene pointer events. Pass null to clear. */
+  setTouchTarget(x, y) {
+    this._touchX = x;
+    this._touchY = y;
+  }
+
+  clearTouchTarget() {
+    this._touchX = null;
+    this._touchY = null;
   }
 
   takeDamage(amount) {
