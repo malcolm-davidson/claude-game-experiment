@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-20T21:27:06.942Z
+updated: 2026-02-20T21:31:29.410Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 2
+next_id: 3
 ---
 
 ## Tasks
@@ -30,4 +30,21 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+```
+
+### TASK-002 · BootScene: Load Tiny Dungeon assets & remove procedural textures
+
+```yaml
+id: TASK-002
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-20T21:31:29.410Z
+updated_at: 2026-02-20T21:31:29.410Z
+history:
+  - ts: 2026-02-20T21:31:29.410Z
+    who: "@malcolm-davidson"
+    action: created
 ```
