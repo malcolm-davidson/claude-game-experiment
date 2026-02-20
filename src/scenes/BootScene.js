@@ -12,14 +12,18 @@ export class BootScene extends Phaser.Scene {
       frameWidth: 341,
       frameHeight: 512,
     });
-    this.load.image('enemy_wyvern', 'assets/wyvern.jpeg');
+    this.load.image('griffin_d1', 'assets/td_monsters/td_monsters_griffin_d1.png');
+    this.load.image('griffin_d2', 'assets/td_monsters/td_monsters_griffin_d2.png');
+    this.load.image('fireball',   'assets/td_fx/tiny_dungeon_fx_fireball_n.png');
+    this.load.image('enemy_shot', 'assets/td_fx/tiny_dungeon_fx_voidball_s.png');
+    this.load.image('loot_hp',       'assets/td_items/td_items_flask_red.png');
+    this.load.image('loot_attack',   'assets/td_items/td_items_flask_blue.png');
+    this.load.image('loot_firerate', 'assets/td_items/td_items_coins_gold.png');
   }
 
   create() {
     this._applyColorKey('dragon', 220);
-    this._applyBeigeKey('enemy_wyvern');
-    this._createFireball();
-    this._createEnemyShot();
+    this._createEnemyAnim();
     this._createParticle();
     this._createBackground();
 
@@ -47,50 +51,13 @@ export class BootScene extends Phaser.Scene {
 
   // ── Procedural texture helpers ──────────────────────────────────────
 
-  _applyBeigeKey(key) {
-    // Remove the textured beige background from wyvern.jpeg.
-    // Background pixels are neutral (low saturation) mid-brightness tones.
-    // Wyvern pixels are either very dark (outline) or highly saturated (body).
-    const src = this.textures.get(key).source[0];
-    const canvas = document.createElement('canvas');
-    canvas.width = src.width;
-    canvas.height = src.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(src.image, 0, 0);
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i], g = data[i + 1], b = data[i + 2];
-      const avg = (r + g + b) / 3;
-      const maxDev = Math.max(Math.abs(r - avg), Math.abs(g - avg), Math.abs(b - avg));
-      if (avg > 20 && avg < 150 && maxDev < 30) {
-        data[i + 3] = 0;
-      }
-    }
-    ctx.putImageData(imageData, 0, 0);
-    this.textures.remove(key);
-    this.textures.addSpriteSheet(key, canvas, {
-      frameWidth: canvas.width,
-      frameHeight: canvas.height,
+  _createEnemyAnim() {
+    this.anims.create({
+      key: 'enemy_walk',
+      frames: [{ key: 'griffin_d1' }, { key: 'griffin_d2' }],
+      frameRate: 4,
+      repeat: -1,
     });
-  }
-
-  _createFireball() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0xff6600);
-    g.fillCircle(6, 6, 6);
-    g.fillStyle(0xffcc00);
-    g.fillCircle(6, 6, 3);
-    g.generateTexture('fireball', 12, 12);
-    g.destroy();
-  }
-
-  _createEnemyShot() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0x33ff66);
-    g.fillCircle(4, 4, 4);
-    g.generateTexture('enemy_shot', 8, 8);
-    g.destroy();
   }
 
   _createParticle() {
