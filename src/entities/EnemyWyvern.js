@@ -13,12 +13,12 @@ export class EnemyWyvern {
     this._shootTimer = 0;
     this._shootInterval = Phaser.Math.Between(1200, 2400);
 
-    this.sprite = scene.physics.add.sprite(x, y, 'enemy_wyvern');
-    this.sprite.setDisplaySize(64, 64);
-    this.sprite.body.setSize(64, 64);
+    this.sprite = scene.physics.add.sprite(x, y, 'griffin_d1');
+    this.sprite.setDisplaySize(48, 48);
+    this.sprite.body.setSize(40, 40);
     this.sprite.setVelocityY(90 + Phaser.Math.Between(0, 40));
     this.sprite.setDepth(10);
-    this.sprite.setFlipY(true);
+    this.sprite.play('enemy_walk');
 
     scene.enemies.add(this.sprite);
     this.sprite.setData('entity', this);
