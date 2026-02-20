@@ -4,9 +4,9 @@
  */
 
 const UPGRADES = [
-  { type: 'hp',       label: 'Dragon Vitality +2',  value: 2,   tint: 0xff4444 },
-  { type: 'attack',   label: 'Dragonfire +1',        value: 1,   tint: 0xff8800 },
-  { type: 'fireRate', label: 'Wing Cadence +50ms',   value: 50,  tint: 0xffdd00 },
+  { type: 'hp',       label: 'Dragon Vitality +2',  value: 2,   tint: 0xff4444, textureKey: 'loot_hp'       },
+  { type: 'attack',   label: 'Dragonfire +1',        value: 1,   tint: 0xff8800, textureKey: 'loot_attack'   },
+  { type: 'fireRate', label: 'Wing Cadence +50ms',   value: 50,  tint: 0xffdd00, textureKey: 'loot_firerate' },
 ];
 
 export class LootSystem {
@@ -19,9 +19,8 @@ export class LootSystem {
     if (Math.random() > this._dropRate) return;
 
     const upgrade = Phaser.Utils.Array.GetRandom(UPGRADES);
-    const gem = this.scene.lootItems.create(x, y, 'particle');
-    gem.setScale(3);
-    gem.setTint(upgrade.tint);
+    const gem = this.scene.lootItems.create(x, y, upgrade.textureKey);
+    gem.setScale(2);
     gem.setDepth(5);
     gem.setData('upgrade', upgrade);
     gem.setVelocityY(40);
