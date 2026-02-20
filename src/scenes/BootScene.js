@@ -12,11 +12,12 @@ export class BootScene extends Phaser.Scene {
       frameWidth: 341,
       frameHeight: 512,
     });
+    this.load.image('enemy_wyvern', 'assets/wyvern.jpeg');
   }
 
   create() {
     this._applyColorKey('dragon', 220);
-    this._createEnemyWyvern();
+    this._applyBeigeKey('enemy_wyvern');
     this._createFireball();
     this._createEnemyShot();
     this._createParticle();
@@ -46,20 +47,32 @@ export class BootScene extends Phaser.Scene {
 
   // ── Procedural texture helpers ──────────────────────────────────────
 
-  _createEnemyWyvern() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(10, 8, 20, 28);
-    g.fillStyle(0x2d6b1a);
-    g.fillTriangle(10, 12, 0, 36, 10, 36);
-    g.fillTriangle(30, 12, 40, 36, 30, 36);
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(13, 0, 14, 10);
-    g.fillStyle(0xff3300);
-    g.fillRect(15, 2, 4, 4);
-    g.fillRect(21, 2, 4, 4);
-    g.generateTexture('enemy_wyvern', 40, 40);
-    g.destroy();
+  _applyBeigeKey(key) {
+    // Remove the textured beige background from wyvern.jpeg.
+    // Background pixels are neutral (low saturation) mid-brightness tones.
+    // Wyvern pixels are either very dark (outline) or highly saturated (body).
+    const src = this.textures.get(key).source[0];
+    const canvas = document.createElement('canvas');
+    canvas.width = src.width;
+    canvas.height = src.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(src.image, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i], g = data[i + 1], b = data[i + 2];
+      const avg = (r + g + b) / 3;
+      const maxDev = Math.max(Math.abs(r - avg), Math.abs(g - avg), Math.abs(b - avg));
+      if (avg > 20 && avg < 150 && maxDev < 30) {
+        data[i + 3] = 0;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    this.textures.remove(key);
+    this.textures.addSpriteSheet(key, canvas, {
+      frameWidth: canvas.width,
+      frameHeight: canvas.height,
+    });
   }
 
   _createFireball() {
