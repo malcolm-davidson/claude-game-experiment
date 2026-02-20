@@ -7,13 +7,26 @@ export class BootScene extends Phaser.Scene {
     super('Boot');
   }
 
+  preload() {
+    this.load.spritesheet('enemy_wyvern', 'assets/IMG_0278.png', {
+      frameWidth: 341,
+      frameHeight: 512,
+    });
+  }
+
   create() {
     this._createDragon();
-    this._createEnemyWyvern();
     this._createFireball();
     this._createEnemyShot();
     this._createParticle();
     this._createBackground();
+
+    this.anims.create({
+      key: 'wyvern_fly',
+      frames: this.anims.generateFrameNumbers('enemy_wyvern', { start: 0, end: 5 }),
+      frameRate: 6,
+      repeat: -1,
+    });
 
     this.scene.start('Game');
   }
@@ -40,22 +53,6 @@ export class BootScene extends Phaser.Scene {
     g.fillStyle(0x8b6914);
     g.fillRect(19, 10, 10, 14);
     g.generateTexture('dragon', 48, 48);
-    g.destroy();
-  }
-
-  _createEnemyWyvern() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(10, 8, 20, 28);
-    g.fillStyle(0x2d6b1a);
-    g.fillTriangle(10, 12, 0, 36, 10, 36);
-    g.fillTriangle(30, 12, 40, 36, 30, 36);
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(13, 0, 14, 10);
-    g.fillStyle(0xff3300);
-    g.fillRect(15, 2, 4, 4);
-    g.fillRect(21, 2, 4, 4);
-    g.generateTexture('enemy_wyvern', 40, 40);
     g.destroy();
   }
 
