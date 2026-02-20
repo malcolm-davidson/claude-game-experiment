@@ -8,65 +8,43 @@ export class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this._wyvernLoaded = false;
-    this.load.once('filecomplete-spritesheet-enemy_wyvern', () => {
-      this._wyvernLoaded = true;
-    });
-    this.load.spritesheet('enemy_wyvern', 'assets/IMG_0278.png', {
+    this.load.spritesheet('dragon', 'assets/IMG_0278.png', {
       frameWidth: 341,
       frameHeight: 512,
     });
   }
 
   create() {
-    this._createDragon();
-    if (!this._wyvernLoaded) {
-      this._createEnemyWyvern();
-    }
+    this._applyColorKey('dragon', 220);
+    this._createEnemyWyvern();
     this._createFireball();
     this._createEnemyShot();
     this._createParticle();
     this._createBackground();
 
-    if (this._wyvernLoaded) {
-      const frames = this.anims.generateFrameNumbers('enemy_wyvern', { start: 0, end: 5 });
-      if (frames.length > 0) {
-        this.anims.create({
-          key: 'wyvern_fly',
-          frames,
-          frameRate: 6,
-          repeat: -1,
-        });
-      }
-    }
-
     this.scene.start('Game');
   }
 
-  // ── Procedural texture helpers ──────────────────────────────────────
-
-  _createDragon() {
-    const g = this.make.graphics({ add: false });
-    // Body
-    g.fillStyle(0x2a0a3a);
-    g.fillRect(14, 8, 20, 32);
-    // Wings
-    g.fillStyle(0x6b1a8a);
-    g.fillTriangle(14, 16, 0, 40, 14, 40);
-    g.fillTriangle(34, 16, 48, 40, 34, 40);
-    // Head
-    g.fillStyle(0x3d1050);
-    g.fillRect(17, 0, 14, 12);
-    // Eyes — glowing amber
-    g.fillStyle(0xff9900);
-    g.fillRect(19, 2, 4, 4);
-    g.fillRect(25, 2, 4, 4);
-    // Rider silhouette
-    g.fillStyle(0x8b6914);
-    g.fillRect(19, 10, 10, 14);
-    g.generateTexture('dragon', 48, 48);
-    g.destroy();
+  _applyColorKey(key, threshold) {
+    const src = this.textures.get(key).source[0];
+    const canvas = document.createElement('canvas');
+    canvas.width = src.width;
+    canvas.height = src.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(src.image, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i] > threshold && data[i + 1] > threshold && data[i + 2] > threshold) {
+        data[i + 3] = 0;
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+    this.textures.remove(key);
+    this.textures.addSpriteSheet(key, canvas, { frameWidth: 341, frameHeight: 512 });
   }
+
+  // ── Procedural texture helpers ──────────────────────────────────────
 
   _createEnemyWyvern() {
     const g = this.make.graphics({ add: false });

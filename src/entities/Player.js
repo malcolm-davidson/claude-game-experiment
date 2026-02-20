@@ -23,8 +23,11 @@ export class Player {
     this._touchY     = null;
 
     this.sprite = scene.physics.add.sprite(x, y, 'dragon');
+    this.sprite.setDisplaySize(64, 96);
+    this.sprite.body.setSize(40, 70);
     this.sprite.setCollideWorldBounds(true);
     this.sprite.setDepth(10);
+    this.sprite.setFrame(1);
 
     // Thrust particle emitter
     this._thrustEmitter = scene.add.particles(x, y + 24, 'particle', {
@@ -74,6 +77,12 @@ export class Player {
 
     // Keep thrust emitter attached
     this._thrustEmitter.setPosition(sprite.x, sprite.y + 24);
+
+    // Banking pose based on horizontal movement
+    const vx = sprite.body.velocity.x;
+    if (vx < -10)      sprite.setFrame(0);
+    else if (vx > 10)  sprite.setFrame(2);
+    else               sprite.setFrame(1);
   }
 
   /** Called by GameScene pointer events. Pass null to clear. */
