@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-20T21:32:47.985Z
+updated: 2026-02-20T21:32:55.287Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 5
@@ -58,17 +58,22 @@ history:
 
 ```yaml
 id: TASK-003
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-agent-003"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-20T21:31:32.718Z
-updated_at: 2026-02-20T21:31:32.718Z
+updated_at: 2026-02-20T21:32:55.287Z
 history:
   - ts: 2026-02-20T21:31:32.718Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-20T21:32:55.287Z
+    who: "@claude-agent-003"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 ### TASK-004 · LootSystem: Use item sprites per upgrade type
