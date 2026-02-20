@@ -14,11 +14,16 @@ export class EnemyWyvern {
     this._shootInterval = Phaser.Math.Between(1200, 2400);
 
     this.sprite = scene.physics.add.sprite(x, y, 'enemy_wyvern');
-    this.sprite.setScale(0.12);
+    const hasAnim = scene.anims.exists('wyvern_fly');
+    if (hasAnim) {
+      this.sprite.setScale(0.12);
+    }
     this.sprite.setVelocityY(90 + Phaser.Math.Between(0, 40));
     this.sprite.setDepth(10);
     this.sprite.setFlipY(true);
-    this.sprite.play('wyvern_fly');
+    if (hasAnim) {
+      this.sprite.play('wyvern_fly');
+    }
 
     scene.enemies.add(this.sprite);
     this.sprite.setData('entity', this);
