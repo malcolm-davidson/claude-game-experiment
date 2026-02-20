@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-20T21:33:04.769Z
+updated: 2026-02-20T21:33:39.017Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 5
@@ -80,13 +80,13 @@ history:
 
 ```yaml
 id: TASK-004
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-agent-004"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-20T21:31:33.427Z
-updated_at: 2026-02-20T21:33:04.769Z
+updated_at: 2026-02-20T21:33:39.017Z
 history:
   - ts: 2026-02-20T21:31:33.427Z
     who: "@malcolm-davidson"
@@ -96,4 +96,9 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-20T21:33:39.017Z
+    who: "@claude-agent-004"
+    action: completed
+    from: in_progress
+    to: done
 ```
