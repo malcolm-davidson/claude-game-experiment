@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:17:24.862Z
+updated: 2026-02-21T05:21:01.413Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 6
@@ -128,7 +128,7 @@ assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-21T05:16:23.125Z
-updated_at: 2026-02-21T05:17:24.862Z
+updated_at: 2026-02-21T05:21:01.413Z
 tags:
   - sprites
   - enemies
@@ -142,4 +142,23 @@ history:
     note: EnemyWyvern already uses griffin from td_monsters. Task should cover
       adding more enemy variety — e.g. bat, skeleton, dragon, goblin etc. — each
       with their own walk/flap animation frames from td_monsters.
+  - ts: 2026-02-21T05:21:01.413Z
+    who: "@claude-code"
+    action: commented
+    note: >-
+      Refined scope: 
+
+      1. BootScene: load sprites for bat (d1/d2), demon (d1/d2), dragon (d1/d2),
+      moth (d1/d2)
+
+      2. Refactor EnemyWyvern into a config-driven Enemy class with type param
+      (hp, speed, size, shootInterval, sprite key)
+
+      3. WaveManager: pass enemy type to scene.spawnEnemy() based on wave number
+      (bat early, demon/dragon later)
+
+      4. GameScene.spawnEnemy(x, y, type) routes to correct enemy config
+
+      Chosen types: bat (fast/weak), griffin (current), moth (medium), demon
+      (tough), dragon (boss)
 ```
