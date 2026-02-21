@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:16:23.125Z
+updated: 2026-02-21T05:17:24.862Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 6
@@ -128,7 +128,7 @@ assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-21T05:16:23.125Z
-updated_at: 2026-02-21T05:16:23.125Z
+updated_at: 2026-02-21T05:17:24.862Z
 tags:
   - sprites
   - enemies
@@ -136,4 +136,10 @@ history:
   - ts: 2026-02-21T05:16:23.125Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-21T05:17:24.862Z
+    who: "@claude-code"
+    action: commented
+    note: EnemyWyvern already uses griffin from td_monsters. Task should cover
+      adding more enemy variety — e.g. bat, skeleton, dragon, goblin etc. — each
+      with their own walk/flap animation frames from td_monsters.
 ```
