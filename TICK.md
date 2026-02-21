@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:21:09.507Z
+updated: 2026-02-21T05:24:51.703Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 9
@@ -167,13 +167,13 @@ history:
 
 ```yaml
 id: TASK-006
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-maestro"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-21T05:21:06.132Z
-updated_at: 2026-02-21T05:21:09.045Z
+updated_at: 2026-02-21T05:24:51.703Z
 tags:
   - sprites
   - boot
@@ -186,6 +186,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-21T05:24:51.703Z
+    who: "@claude-maestro"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 ### TASK-007 · Enemy: refactor EnemyWyvern into config-driven Enemy class with type support
