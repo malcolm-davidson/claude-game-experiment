@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:21:06.368Z
+updated: 2026-02-21T05:21:06.595Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 8
+next_id: 9
 ---
 
 ## Tasks
@@ -199,6 +199,26 @@ tags:
   - refactor
 history:
   - ts: 2026-02-21T05:21:06.368Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+### TASK-008 · WaveManager + GameScene: spawn enemy variety by wave
+
+```yaml
+id: TASK-008
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-21T05:21:06.595Z
+updated_at: 2026-02-21T05:21:06.595Z
+tags:
+  - enemies
+  - waves
+history:
+  - ts: 2026-02-21T05:21:06.595Z
     who: "@malcolm-davidson"
     action: created
 ```
