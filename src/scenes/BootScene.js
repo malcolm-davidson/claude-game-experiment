@@ -12,13 +12,25 @@ export class BootScene extends Phaser.Scene {
       frameWidth: 341,
       frameHeight: 512,
     });
+    this.load.image('griffin_d1', 'assets/td_monsters/td_monsters_griffin_d1.png');
+    this.load.image('griffin_d2', 'assets/td_monsters/td_monsters_griffin_d2.png');
+    this.load.image('bat_d1',    'assets/td_monsters/td_monsters_bat_d1.png');
+    this.load.image('bat_d2',    'assets/td_monsters/td_monsters_bat_d2.png');
+    this.load.image('moth_d1',   'assets/td_monsters/td_monsters_moth_d1.png');
+    this.load.image('moth_d2',   'assets/td_monsters/td_monsters_moth_d2.png');
+    this.load.image('demon_d1',  'assets/td_monsters/td_monsters_demon_d1.png');
+    this.load.image('demon_d2',  'assets/td_monsters/td_monsters_demon_d2.png');
+    this.load.image('dragon_d1', 'assets/td_monsters/td_monsters_dragon_d1.png');
+    this.load.image('dragon_d2', 'assets/td_monsters/td_monsters_dragon_d2.png');
+    this.load.image('fireball',   'assets/td_fx/tiny_dungeon_fx_fireball_n.png');
+    this.load.image('enemy_shot', 'assets/td_fx/tiny_dungeon_fx_voidball_s.png');
+    this.load.image('loot_hp',       'assets/td_items/td_items_flask_red.png');
+    this.load.image('loot_attack',   'assets/td_items/td_items_flask_blue.png');
+    this.load.image('loot_firerate', 'assets/td_items/td_items_coins_gold.png');
   }
 
   create() {
     this._applyColorKey('dragon', 220);
-    this._createEnemyWyvern();
-    this._createFireball();
-    this._createEnemyShot();
     this._createParticle();
     this._createBackground();
 
@@ -45,40 +57,6 @@ export class BootScene extends Phaser.Scene {
   }
 
   // ── Procedural texture helpers ──────────────────────────────────────
-
-  _createEnemyWyvern() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(10, 8, 20, 28);
-    g.fillStyle(0x2d6b1a);
-    g.fillTriangle(10, 12, 0, 36, 10, 36);
-    g.fillTriangle(30, 12, 40, 36, 30, 36);
-    g.fillStyle(0x1a3a0a);
-    g.fillRect(13, 0, 14, 10);
-    g.fillStyle(0xff3300);
-    g.fillRect(15, 2, 4, 4);
-    g.fillRect(21, 2, 4, 4);
-    g.generateTexture('enemy_wyvern', 40, 40);
-    g.destroy();
-  }
-
-  _createFireball() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0xff6600);
-    g.fillCircle(6, 6, 6);
-    g.fillStyle(0xffcc00);
-    g.fillCircle(6, 6, 3);
-    g.generateTexture('fireball', 12, 12);
-    g.destroy();
-  }
-
-  _createEnemyShot() {
-    const g = this.make.graphics({ add: false });
-    g.fillStyle(0x33ff66);
-    g.fillCircle(4, 4, 4);
-    g.generateTexture('enemy_shot', 8, 8);
-    g.destroy();
-  }
 
   _createParticle() {
     const g = this.make.graphics({ add: false });

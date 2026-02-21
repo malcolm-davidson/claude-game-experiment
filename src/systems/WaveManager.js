@@ -14,6 +14,16 @@ export class WaveManager {
     this._maxEnemies      = 6;
   }
 
+  /** Enemy types available per wave tier. Earlier entries = more common. */
+  _poolForWave() {
+    const w = this.wave;
+    if (w <= 2) return ['griffin', 'bat', 'bat'];
+    if (w <= 4) return ['griffin', 'griffin', 'bat', 'moth'];
+    if (w <= 6) return ['griffin', 'moth', 'moth', 'demon'];
+    if (w <= 8) return ['moth', 'demon', 'demon', 'dragon'];
+    return ['demon', 'demon', 'dragon', 'dragon'];
+  }
+
   update(time, delta) {
     this._spawnTimer += delta;
     this._waveTimer  += delta;
@@ -22,9 +32,12 @@ export class WaveManager {
         this._enemiesThisWave < this._maxEnemies) {
       this._spawnTimer = 0;
       this._enemiesThisWave++;
+      const pool = this._poolForWave();
+      const type = pool[Phaser.Math.Between(0, pool.length - 1)];
       this.scene.spawnEnemy(
         Phaser.Math.Between(40, 440),
         -40,
+        type,
       );
     }
 

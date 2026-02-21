@@ -157,8 +157,8 @@ export class GameScene extends Phaser.Scene {
     this.registry.set('score', current + points);
   }
 
-  spawnEnemy(x, y) {
-    new EnemyWyvern(this, x, y);
+  spawnEnemy(x, y, type = 'griffin') {
+    new EnemyWyvern(this, x, y, type);
   }
 
   gameOver() {

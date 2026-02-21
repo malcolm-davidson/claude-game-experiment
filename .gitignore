@@ -1,3 +1,9 @@
 node_modules/
 dist/
 .venv/
+.playwright/
+.playwright-cli/
+# debug screenshots at repo root
+/*.png
+# Windows download metadata
+*:Zone.Identifier
