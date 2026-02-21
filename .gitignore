@@ -5,3 +5,5 @@ dist/
 .playwright-cli/
 # debug screenshots at repo root
 /*.png
+# Windows download metadata
+*:Zone.Identifier
