@@ -1,29 +1,97 @@
 /**
- * EnemyWyvern — basic enemy unit.
- * Flies down in a sine-wave pattern, fires green bolts at the player.
+ * EnemyWyvern — config-driven enemy unit.
+ * Accepts a `type` string to pick stats and sprites from ENEMY_TYPES.
  */
+
+/** Per-type enemy configuration. */
+const ENEMY_TYPES = {
+  bat: {
+    spriteBase:    'bat',
+    hp:            1,
+    speed:         130,
+    size:          32,
+    bodySize:      28,
+    shootInterval: 0,          // 0 = never shoots
+    amplitude:     [25, 45],
+    frequency:     [0.0003, 0.0006],
+    score:         50,
+    tintFill:      0xaa66ff,   // near-black sprite — fill with solid purple silhouette
+  },
+  griffin: {
+    spriteBase:    'griffin',
+    hp:            3,
+    speed:         90,
+    size:          48,
+    bodySize:      40,
+    shootInterval: [1200, 2400],
+    amplitude:     [20, 40],
+    frequency:     [0.0002, 0.0005],
+    score:         100,
+  },
+  moth: {
+    spriteBase:    'moth',
+    hp:            2,
+    speed:         110,
+    size:          40,
+    bodySize:      34,
+    shootInterval: [1800, 3000],
+    amplitude:     [15, 30],
+    frequency:     [0.0002, 0.0004],
+    score:         75,
+  },
+  demon: {
+    spriteBase:    'demon',
+    hp:            5,
+    speed:         70,
+    size:          52,
+    bodySize:      44,
+    shootInterval: [800, 1600],
+    amplitude:     [10, 25],
+    frequency:     [0.00015, 0.0003],
+    score:         200,
+  },
+  dragon: {
+    spriteBase:    'dragon',
+    hp:            8,
+    speed:         55,
+    size:          64,
+    bodySize:      56,
+    shootInterval: [600, 1200],
+    amplitude:     [8, 18],
+    frequency:     [0.0001, 0.0002],
+    score:         400,
+  },
+};
+
 export class EnemyWyvern {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, type = 'griffin') {
     this.scene = scene;
+    const cfg = ENEMY_TYPES[type] ?? ENEMY_TYPES.griffin;
+    this._cfg = cfg;
 
-    this.hp = 3;
+    this.hp = cfg.hp;
     this._startX = x;
-    this._amplitude = Phaser.Math.Between(40, 80);
-    this._frequency = Phaser.Math.FloatBetween(0.001, 0.003);
+    this._amplitude  = Phaser.Math.Between(...cfg.amplitude);
+    this._frequency  = Phaser.Math.FloatBetween(...cfg.frequency);
     this._shootTimer = 0;
-    this._shootInterval = Phaser.Math.Between(1200, 2400);
+    this._shootInterval = cfg.shootInterval
+      ? Phaser.Math.Between(...cfg.shootInterval)
+      : 0;
 
-    this.sprite = scene.physics.add.sprite(x, y, 'griffin_d1');
-    this.sprite.setDisplaySize(48, 48);
-    this.sprite.body.setSize(40, 40);
-    this.sprite.setVelocityY(90 + Phaser.Math.Between(0, 40));
+    this._frameKeys = [`${cfg.spriteBase}_d1`, `${cfg.spriteBase}_d2`];
+
+    this.sprite = scene.physics.add.sprite(x, y, this._frameKeys[0]);
+    this.sprite.setDisplaySize(cfg.size, cfg.size);
     this.sprite.setDepth(10);
-    this.sprite.play('enemy_walk');
+    if (cfg.tintFill) this.sprite.setTintFill(cfg.tintFill);
+    else if (cfg.tint) this.sprite.setTint(cfg.tint);
 
+    // Add to group BEFORE setting body properties — group.add() resets the body
     scene.enemies.add(this.sprite);
+    this.sprite.body.setSize(cfg.bodySize, cfg.bodySize);
+    this.sprite.setVelocityY(cfg.speed + Phaser.Math.Between(0, 40));
     this.sprite.setData('entity', this);
 
-    // Attach update to scene
     scene.events.on('update', this._update, this);
     this.sprite.once('destroy', () => {
       scene.events.off('update', this._update, this);
@@ -50,11 +118,18 @@ export class EnemyWyvern {
     this.sprite.x = this._startX +
       Math.sin(time * this._frequency * Math.PI * 2) * this._amplitude;
 
-    // Shoot periodically
-    this._shootTimer += delta;
-    if (this._shootTimer >= this._shootInterval) {
-      this._shootTimer = 0;
-      this._shoot();
+    // 2-frame flap animation (toggle every 250ms)
+    this.sprite.setTexture(Math.floor(time / 250) % 2 === 0
+      ? this._frameKeys[0]
+      : this._frameKeys[1]);
+
+    // Shoot periodically (0 = never)
+    if (this._shootInterval > 0) {
+      this._shootTimer += delta;
+      if (this._shootTimer >= this._shootInterval) {
+        this._shootTimer = 0;
+        this._shoot();
+      }
     }
 
     // Despawn if off bottom
@@ -74,10 +149,8 @@ export class EnemyWyvern {
   _die() {
     const { scene, sprite } = this;
 
-    // Score
-    scene.addScore(100);
+    scene.addScore(this._cfg.score);
 
-    // Explosion particles
     scene.add.particles(sprite.x, sprite.y, 'particle', {
       speed: { min: 60, max: 150 },
       scale: { start: 1, end: 0 },
@@ -88,7 +161,6 @@ export class EnemyWyvern {
       depth: 15,
     });
 
-    // Chance to drop loot
     scene.lootSystem.tryDrop(sprite.x, sprite.y);
 
     sprite.destroy();

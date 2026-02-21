@@ -14,6 +14,14 @@ export class BootScene extends Phaser.Scene {
     });
     this.load.image('griffin_d1', 'assets/td_monsters/td_monsters_griffin_d1.png');
     this.load.image('griffin_d2', 'assets/td_monsters/td_monsters_griffin_d2.png');
+    this.load.image('bat_d1',    'assets/td_monsters/td_monsters_bat_d1.png');
+    this.load.image('bat_d2',    'assets/td_monsters/td_monsters_bat_d2.png');
+    this.load.image('moth_d1',   'assets/td_monsters/td_monsters_moth_d1.png');
+    this.load.image('moth_d2',   'assets/td_monsters/td_monsters_moth_d2.png');
+    this.load.image('demon_d1',  'assets/td_monsters/td_monsters_demon_d1.png');
+    this.load.image('demon_d2',  'assets/td_monsters/td_monsters_demon_d2.png');
+    this.load.image('dragon_d1', 'assets/td_monsters/td_monsters_dragon_d1.png');
+    this.load.image('dragon_d2', 'assets/td_monsters/td_monsters_dragon_d2.png');
     this.load.image('fireball',   'assets/td_fx/tiny_dungeon_fx_fireball_n.png');
     this.load.image('enemy_shot', 'assets/td_fx/tiny_dungeon_fx_voidball_s.png');
     this.load.image('loot_hp',       'assets/td_items/td_items_flask_red.png');
@@ -23,7 +31,6 @@ export class BootScene extends Phaser.Scene {
 
   create() {
     this._applyColorKey('dragon', 220);
-    this._createEnemyAnim();
     this._createParticle();
     this._createBackground();
 
@@ -50,15 +57,6 @@ export class BootScene extends Phaser.Scene {
   }
 
   // ── Procedural texture helpers ──────────────────────────────────────
-
-  _createEnemyAnim() {
-    this.anims.create({
-      key: 'enemy_walk',
-      frames: [{ key: 'griffin_d1' }, { key: 'griffin_d2' }],
-      frameRate: 4,
-      repeat: -1,
-    });
-  }
 
   _createParticle() {
     const g = this.make.graphics({ add: false });
