@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:21:01.413Z
+updated: 2026-02-21T05:21:06.132Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 6
+next_id: 7
 ---
 
 ## Tasks
@@ -161,4 +161,24 @@ history:
 
       Chosen types: bat (fast/weak), griffin (current), moth (medium), demon
       (tough), dragon (boss)
+```
+
+### TASK-006 · BootScene: load sprites for bat, demon, dragon, moth
+
+```yaml
+id: TASK-006
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-21T05:21:06.132Z
+updated_at: 2026-02-21T05:21:06.132Z
+tags:
+  - sprites
+  - boot
+history:
+  - ts: 2026-02-21T05:21:06.132Z
+    who: "@malcolm-davidson"
+    action: created
 ```
