@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:58.205Z
+updated: 2026-02-22T06:35:58.382Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 36
+next_id: 37
 ---
 
 ## Tasks
@@ -908,3 +908,26 @@ history:
 ```
 
 > Physics overlap with MarketTile triggers: scene.physics.world.timeScale=0.3, 160x200 overlay panel opens near tile, shows 2-3 zone-tier-filtered items with icon+label+colour costs, affordability states, one-button purchase flow. Restores time scale on close. Files: src/entities/MarketTile.js, src/scenes/GameScene.js
+
+### TASK-036 · EPIC-F-04: Unit tests for MarketItems and affordability
+
+```yaml
+id: TASK-036
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:58.382Z
+updated_at: 2026-02-22T06:35:58.382Z
+tags:
+  - epic-f
+  - market
+  - tests
+history:
+  - ts: 2026-02-22T06:35:58.382Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Unit tests for MarketItems data file (tier filtering, cost structure) and affordability check path. No Phaser dependency. File: src/__tests__/MarketItems.test.js
