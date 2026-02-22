@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:37:02.559Z
+updated: 2026-02-22T06:37:02.744Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 50
+next_id: 51
 ---
 
 ## Tasks
@@ -1233,3 +1233,26 @@ history:
 ```
 
 > Structured tuning of ArenaManager constants, essence drop rates (C-02 values), market item costs (F-02 pricing), tile spawn frequency (D-01 intervals). Game is currently too easy. Supersedes TASK-011.
+
+### TASK-050 · EPIC-J-02: GitHub/coffee tips support overlay in SummaryScene
+
+```yaml
+id: TASK-050
+status: backlog
+priority: low
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:37:02.744Z
+updated_at: 2026-02-22T06:37:02.744Z
+tags:
+  - epic-j
+  - polish
+  - ui
+history:
+  - ts: 2026-02-22T06:37:02.744Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Move existing GitHub button from gameplay HUD to a 'Support' overlay accessible from SummaryScene (I-04). Add Buy Me a Coffee link alongside. Keeps gameplay HUD clean. Supersedes TASK-014.
