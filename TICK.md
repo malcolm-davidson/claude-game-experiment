@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:16.052Z
+updated: 2026-02-22T06:35:16.229Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 25
+next_id: 26
 ---
 
 ## Tasks
@@ -655,3 +655,26 @@ history:
 ```
 
 > Add 4-icon row to UIScene (bottom or right side). Each slot: gem icon + count text. Pulse tween on gain (scale 1→1.3→1, 200ms). Dim/highlight affordability based on marketTileActive/ritualActive registry. Accessibility: letter label (B/P/R/G) per colour slot. File: src/scenes/UIScene.js
+
+### TASK-025 · EPIC-C-04: Unit tests for EssenceManager
+
+```yaml
+id: TASK-025
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:16.229Z
+updated_at: 2026-02-22T06:35:16.229Z
+tags:
+  - epic-c
+  - economy
+  - tests
+history:
+  - ts: 2026-02-22T06:35:16.229Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add src/__tests__/EssenceManager.test.js: gain/spend/canAfford logic (pure, no Phaser), reject spend below zero, event emission with vi.fn() mocks. Follow CollisionHandlers.test.js pattern.
