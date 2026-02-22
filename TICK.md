@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:58.027Z
+updated: 2026-02-22T06:35:58.205Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 35
+next_id: 36
 ---
 
 ## Tasks
@@ -885,3 +885,26 @@ history:
 ```
 
 > Create src/data/MarketItems.js: 12-16 items {id, label, effect, cost: {color: n}, tier}. Spans all 4 colours. Tier 1=cheap, Tier 2=moderate, Tier 3=top-zone only. Apply via player.applyUpgrade() where possible, new handlers for ritual resources (Thread).
+
+### TASK-035 · EPIC-F-03: Market interaction micro-panel
+
+```yaml
+id: TASK-035
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:58.205Z
+updated_at: 2026-02-22T06:35:58.205Z
+tags:
+  - epic-f
+  - market
+  - ui
+history:
+  - ts: 2026-02-22T06:35:58.205Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Physics overlap with MarketTile triggers: scene.physics.world.timeScale=0.3, 160x200 overlay panel opens near tile, shows 2-3 zone-tier-filtered items with icon+label+colour costs, affordability states, one-button purchase flow. Restores time scale on close. Files: src/entities/MarketTile.js, src/scenes/GameScene.js
