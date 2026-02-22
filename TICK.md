@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:16.229Z
+updated: 2026-02-22T06:35:32.910Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 26
+next_id: 27
 ---
 
 ## Tasks
@@ -678,3 +678,26 @@ history:
 ```
 
 > Add src/__tests__/EssenceManager.test.js: gain/spend/canAfford logic (pure, no Phaser), reject spend below zero, event emission with vi.fn() mocks. Follow CollisionHandlers.test.js pattern.
+
+### TASK-026 · EPIC-D-01: TileManager — spawn and scroll system
+
+```yaml
+id: TASK-026
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:32.910Z
+updated_at: 2026-02-22T06:35:32.910Z
+tags:
+  - epic-d
+  - tiles
+  - systems
+history:
+  - ts: 2026-02-22T06:35:32.910Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/systems/TileManager.js: spawns tiles at zone-appropriate Y band, tile has physics overlap body, type config {type, textureKey, radius}, manages lifecycle (destroy at y>700). scene.tacTiles group. ArenaManager calls tileManager.spawnTile(type, zone) at intervals.
