@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:55.214Z
+updated: 2026-02-22T06:34:55.383Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 20
+next_id: 21
 ---
 
 ## Tasks
@@ -540,3 +540,26 @@ history:
 ```
 
 > Create src/systems/ZoneManager.js with ZONES constants (Bottom y:430-640, Middle y:200-430, Top y:0-200, each with label and reward multiplier), getZone(y), getPlayerZone(player). GameScene calls each frame, writes playerZone to registry. Unblocks: D-01, F-01, I-02.
+
+### TASK-020 · EPIC-B-02: World-space zone visual bands
+
+```yaml
+id: TASK-020
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:55.383Z
+updated_at: 2026-02-22T06:34:55.383Z
+tags:
+  - epic-b
+  - visuals
+  - zones
+history:
+  - ts: 2026-02-22T06:34:55.383Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> In GameScene render subtle semi-transparent horizontal strips at zone boundaries (alpha 0.08-0.12). Dark red at top, neutral in middle, blue-grey at bottom. Scrolls with bg.tilePositionY. File: src/scenes/GameScene.js
