@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:37.341Z
+updated: 2026-02-22T06:34:37.510Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 17
+next_id: 18
 ---
 
 ## Tasks
@@ -471,3 +471,26 @@ history:
 ```
 
 > Add dash mechanic: 2 charges, ~120ms iframes (_dashing flag), dashCharges registry key, particle burst on dash. Input: double-tap direction or Shift/X key. File: src/entities/Player.js
+
+### TASK-017 · EPIC-A-03: Pre-populate registry schema in GameScene
+
+```yaml
+id: TASK-017
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:37.510Z
+updated_at: 2026-02-22T06:34:37.510Z
+tags:
+  - epic-a
+  - foundation
+  - registry
+history:
+  - ts: 2026-02-22T06:34:37.510Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> In GameScene.create(), pre-populate all new registry keys so UIScene can safely read without null checks: essence_black/purple/red/green (0), devotion_* (from localStorage or 0), dashCharges/maxDashCharges (2), arenaIndex, arenaPhase, marketTileActive (false). File: src/scenes/GameScene.js
