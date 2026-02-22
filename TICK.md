@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:50.848Z
+updated: 2026-02-22T06:36:51.033Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 48
+next_id: 49
 ---
 
 ## Tasks
@@ -1187,3 +1187,26 @@ history:
 ```
 
 > Create src/ui/EventFeed.js: queue-based toast renderer in UIScene space. push(message, color) shows 2s floating text (left edge, stacks upward). Listens to: essence-gained/spent, devotion-gained, arena-escape-penalty, market-tile-spawned, ritual-banked. Consistent verbs: Gain, Spend, Match, Skip, Bank, Buy.
+
+### TASK-048 · EPIC-I-06: Accessibility audit pass
+
+```yaml
+id: TASK-048
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:51.033Z
+updated_at: 2026-02-22T06:36:51.033Z
+tags:
+  - epic-i
+  - ui
+  - accessibility
+history:
+  - ts: 2026-02-22T06:36:51.033Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Review all new HUD components (C-03, F-03, G-03, H-02, I-01 through I-05). Verify: no colour-only meaning (every element has icon+shape), consistent verb vocabulary, readable at 480px width, touch-friendly button sizes in market panel. Fix any violations found.
