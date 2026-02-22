@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:08.018Z
+updated: 2026-02-22T06:34:08.186Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 15
@@ -374,13 +374,13 @@ history:
 
 ```yaml
 id: TASK-013
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T05:25:42.682Z
-updated_at: 2026-02-22T05:25:42.682Z
+updated_at: 2026-02-22T06:34:08.186Z
 tags:
   - ui
   - scores
@@ -389,6 +389,11 @@ history:
   - ts: 2026-02-22T05:25:42.682Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-22T06:34:08.186Z
+    who: "@plan"
+    action: completed
+    from: backlog
+    to: done
 ```
 
 > Add a high score leaderboard/page to the game. GH Issue #5
