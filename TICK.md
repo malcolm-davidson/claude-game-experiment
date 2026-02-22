@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:33.259Z
+updated: 2026-02-22T06:35:33.435Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 29
+next_id: 30
 ---
 
 ## Tasks
@@ -747,3 +747,26 @@ history:
 ```
 
 > Add _silenced flag to EnemyWyvern. When overlapping Silence tile, suppress _shootTimer. Flag cleared each frame if not overlapping. Visual: purple-tinted tile or voidimpact FX overlay. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
+
+### TASK-029 · EPIC-D-04: Weakness tile — enemies take double damage
+
+```yaml
+id: TASK-029
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:33.435Z
+updated_at: 2026-02-22T06:35:33.435Z
+tags:
+  - epic-d
+  - tiles
+  - enemies
+history:
+  - ts: 2026-02-22T06:35:33.435Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add _weakened flag to EnemyWyvern. When overlapping Weakness tile, takeDamage(amount) deals amount*2. Visual: red-tinted td_world_trap.png. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
