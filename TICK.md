@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:33.611Z
+updated: 2026-02-22T06:35:43.171Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 31
+next_id: 32
 ---
 
 ## Tasks
@@ -793,3 +793,26 @@ history:
 ```
 
 > Add _slowed flag to EnemyWyvern. When overlapping Slow tile, velocity Y *= 0.5. Velocity restored on exit (overlap exit tracking). Visual: blue-tinted floor tile. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
+
+### TASK-031 · EPIC-E-01: Escape tracking and token accumulation in ArenaManager
+
+```yaml
+id: TASK-031
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:43.171Z
+updated_at: 2026-02-22T06:35:43.171Z
+tags:
+  - epic-e
+  - wave-memory
+  - enemies
+history:
+  - ts: 2026-02-22T06:35:43.171Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Replace silent y>700 destroy in EnemyWyvern with arenaManager.recordEscape(type). ArenaManager maintains _escapeTokens = {melee, ranged, defense}. Type-to-category: bat/griffin/dragon=melee, moth/demon=ranged. Tokens accumulate within a run. Supersedes TASK-012. Files: src/entities/EnemyWyvern.js, src/systems/ArenaManager.js
