@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:37.167Z
+updated: 2026-02-22T06:34:37.341Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 16
+next_id: 17
 ---
 
 ## Tasks
@@ -448,3 +448,26 @@ history:
 ```
 
 > Replace WaveManager with ArenaManager. Add arena phases (spawning/elite_warning/transitioning), tunable arena duration (~60s), arena-start/arena-end/run-end events. Preserve _poolForArena() enemy pool logic. Files: src/systems/ArenaManager.js (new), src/scenes/GameScene.js
+
+### TASK-016 · EPIC-A-02: Add Dash action to Player
+
+```yaml
+id: TASK-016
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:37.341Z
+updated_at: 2026-02-22T06:34:37.341Z
+tags:
+  - epic-a
+  - player
+  - foundation
+history:
+  - ts: 2026-02-22T06:34:37.341Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add dash mechanic: 2 charges, ~120ms iframes (_dashing flag), dashCharges registry key, particle burst on dash. Input: double-tap direction or Shift/X key. File: src/entities/Player.js
