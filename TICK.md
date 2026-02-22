@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T05:25:39.443Z
+updated: 2026-02-22T05:25:42.682Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 13
+next_id: 14
 ---
 
 ## Tasks
@@ -349,3 +349,26 @@ history:
 ```
 
 > Enemies that pass the bottom of the screen should accumulate into a significant penalty (rather than silently despawning). GH Issue #16
+
+### TASK-013 · Add high score page
+
+```yaml
+id: TASK-013
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T05:25:42.682Z
+updated_at: 2026-02-22T05:25:42.682Z
+tags:
+  - ui
+  - scores
+  - gh-5
+history:
+  - ts: 2026-02-22T05:25:42.682Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add a high score leaderboard/page to the game. GH Issue #5
