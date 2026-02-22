@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:15.698Z
+updated: 2026-02-22T06:35:15.870Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 23
+next_id: 24
 ---
 
 ## Tasks
@@ -609,3 +609,26 @@ history:
 ```
 
 > Create src/systems/EssenceManager.js: gain(color, amount, source), spend(color, amount), canAfford(costs), getAll(). Emits essence-gained/essence-spent events via scene.events. Writes registry keys from A-03. source param used by DevotionManager (H-01).
+
+### TASK-023 · EPIC-C-02: Colour-coded essence drops from enemies
+
+```yaml
+id: TASK-023
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:15.870Z
+updated_at: 2026-02-22T06:35:15.870Z
+tags:
+  - epic-c
+  - economy
+  - enemies
+history:
+  - ts: 2026-02-22T06:35:15.870Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Extend LootSystem.tryDrop() to drop coloured essence orbs. Type-to-colour affinity: bat=purple, griffin=red, moth=green, demon=black, dragon=black+red mix. Use gem sprites (gem_amethyst, gem_ruby, gem_jade, skull) from td_items. Overlap-to-collect calls essenceManager.gain(color, 1, 'kill'). Supersedes TASK-010.
