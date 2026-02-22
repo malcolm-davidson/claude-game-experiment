@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:19.274Z
+updated: 2026-02-22T06:36:19.455Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 40
+next_id: 41
 ---
 
 ## Tasks
@@ -1000,3 +1000,26 @@ history:
 ```
 
 > Create src/scenes/RitualScene.js — launches over GameScene at arena-end event. Shows: current sigil (large + colour icon), sequence history (row of small icons), Thread count, Depth, Resonance bar, available Essence. Input: 4 colour Match buttons + Skip + Bank. Preview consequences before input. Applies RitualManager outcome on completion, resumes game.
+
+### TASK-040 · EPIC-G-04: Unit tests for RitualManager
+
+```yaml
+id: TASK-040
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:19.455Z
+updated_at: 2026-02-22T06:36:19.455Z
+tags:
+  - epic-g
+  - ritual
+  - tests
+history:
+  - ts: 2026-02-22T06:36:19.455Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Tests for src/systems/RitualManager.js: Depth counting on match/skip sequences, Resonance increases with colour runs, Thread depletion ends ritual, Bank returns current state. File: src/__tests__/RitualManager.test.js
