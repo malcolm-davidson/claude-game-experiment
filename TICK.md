@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:43.346Z
+updated: 2026-02-22T06:35:57.846Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 33
+next_id: 34
 ---
 
 ## Tasks
@@ -839,3 +839,26 @@ history:
 ```
 
 > Update ArenaManager _poolForArena() to weight enemy type selection by escape tokens (+1 weight per token per category, cap +5). Emit arena-escape-penalty event. Brief screen toast 'X escaped — more incoming!' using existing wave-announcement tween pattern. File: src/systems/ArenaManager.js
+
+### TASK-033 · EPIC-F-01: MarketTile — world object with despawn timer
+
+```yaml
+id: TASK-033
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:57.846Z
+updated_at: 2026-02-22T06:35:57.846Z
+tags:
+  - epic-f
+  - market
+  - tiles
+history:
+  - ts: 2026-02-22T06:35:57.846Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/entities/MarketTile.js: world-space tile with despawn timer (~15s), timer ring visual, zone determines item tier. Writes marketTileActive, marketTileX/Y, marketTileTier, marketTileTimeRemaining to registry. ArenaManager spawns one per arena at midpoint.
