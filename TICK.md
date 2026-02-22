@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:50.300Z
+updated: 2026-02-22T06:36:50.479Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 45
+next_id: 46
 ---
 
 ## Tasks
@@ -1116,3 +1116,27 @@ history:
 ```
 
 > Add vertical 3-segment zone pill to UIScene (left or right edge): TOP/MID/BOT labels, current zone highlighted, reward multiplier badge. Reads playerZone registry key from ZoneManager. File: src/scenes/UIScene.js
+
+### TASK-045 · EPIC-I-03: UIScene: market tile edge arrow + despawn timer
+
+```yaml
+id: TASK-045
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:50.479Z
+updated_at: 2026-02-22T06:36:50.479Z
+tags:
+  - epic-i
+  - ui
+  - hud
+  - market
+history:
+  - ts: 2026-02-22T06:36:50.479Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> When marketTileActive registry is true: draw edge arrow pointing to tile if off-screen, show despawn timer ring, toast 'Market Tile — [Zone] Tier' on spawn. Reads marketTileX, marketTileY, marketTileTimeRemaining, marketTileTier. File: src/scenes/UIScene.js
