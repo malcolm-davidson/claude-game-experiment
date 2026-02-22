@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-21T05:24:52.515Z
+updated: 2026-02-22T05:25:34.193Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 9
+next_id: 10
 ---
 
 ## Tasks
@@ -257,3 +257,26 @@ history:
     from: in_progress
     to: done
 ```
+
+### TASK-009 · Create upgrade system
+
+```yaml
+id: TASK-009
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T05:25:34.193Z
+updated_at: 2026-02-22T05:25:34.193Z
+tags:
+  - gameplay
+  - upgrades
+  - gh-10
+history:
+  - ts: 2026-02-22T05:25:34.193Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Fast-paced upgrade section appearing at end of a section. Simon-like mini game to trigger certain upgrades. GH Issue #10
