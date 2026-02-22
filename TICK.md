@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:29.895Z
+updated: 2026-02-22T06:36:50.116Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 43
+next_id: 44
 ---
 
 ## Tasks
@@ -1069,3 +1069,26 @@ history:
 ```
 
 > Add 4 compact bars (8x40px, right edge) to UIScene. Colour icons above each bar, fills based on progress to next unlock threshold. Brief '+N' popup text on in-run devotion gain. Reads devotion_* and devotion_next_threshold_* registry keys. File: src/scenes/UIScene.js
+
+### TASK-043 · EPIC-I-01: UIScene: dash charge pips + arena index counter
+
+```yaml
+id: TASK-043
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:50.116Z
+updated_at: 2026-02-22T06:36:50.116Z
+tags:
+  - epic-i
+  - ui
+  - hud
+history:
+  - ts: 2026-02-22T06:36:50.116Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add to UIScene: 2 dash charge pips (hollow=depleted, filled gold=charged) and arena index counter 'ARENA 2/6' replacing/supplementing wave text. Reads dashCharges, maxDashCharges, arenaIndex registry keys. File: src/scenes/UIScene.js
