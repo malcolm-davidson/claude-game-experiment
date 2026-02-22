@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:50.479Z
+updated: 2026-02-22T06:36:50.664Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 46
+next_id: 47
 ---
 
 ## Tasks
@@ -1140,3 +1140,27 @@ history:
 ```
 
 > When marketTileActive registry is true: draw edge arrow pointing to tile if off-screen, show despawn timer ring, toast 'Market Tile — [Zone] Tier' on spawn. Reads marketTileX, marketTileY, marketTileTimeRemaining, marketTileTier. File: src/scenes/UIScene.js
+
+### TASK-046 · EPIC-I-04: SummaryScene — end-of-run summary screen
+
+```yaml
+id: TASK-046
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:50.664Z
+updated_at: 2026-02-22T06:36:50.664Z
+tags:
+  - epic-i
+  - ui
+  - scenes
+  - highscore
+history:
+  - ts: 2026-02-22T06:36:50.664Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/scenes/SummaryScene.js. Two columns: Lost (unspent essence by colour with icons) / Gained (devotion gains by colour, unlock progress, new mount notification). Top-10 high score in localStorage. 'Play Again' button resets registry. Replaces current inline gameOver() text. Supersedes TASK-013.
