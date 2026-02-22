@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:55.383Z
+updated: 2026-02-22T06:34:55.558Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 21
+next_id: 22
 ---
 
 ## Tasks
@@ -563,3 +563,26 @@ history:
 ```
 
 > In GameScene render subtle semi-transparent horizontal strips at zone boundaries (alpha 0.08-0.12). Dark red at top, neutral in middle, blue-grey at bottom. Scrolls with bg.tilePositionY. File: src/scenes/GameScene.js
+
+### TASK-021 · EPIC-B-03: Zone-aware enemy spawn weighting in ArenaManager
+
+```yaml
+id: TASK-021
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:55.558Z
+updated_at: 2026-02-22T06:34:55.558Z
+tags:
+  - epic-b
+  - systems
+  - zones
+history:
+  - ts: 2026-02-22T06:34:55.558Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Update ArenaManager _poolForArena() so top zone enemies get +20% speed and higher essence drop chance; bottom zone has fewer enemies but higher loot rate. Adds zoneBonus property to spawn config. File: src/systems/ArenaManager.js
