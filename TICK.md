@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:58.382Z
+updated: 2026-02-22T06:36:18.912Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 37
+next_id: 38
 ---
 
 ## Tasks
@@ -931,3 +931,26 @@ history:
 ```
 
 > Unit tests for MarketItems data file (tier filtering, cost structure) and affordability check path. No Phaser dependency. File: src/__tests__/MarketItems.test.js
+
+### TASK-037 · EPIC-G-01: RitualManager — sigil sequence engine
+
+```yaml
+id: TASK-037
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:18.912Z
+updated_at: 2026-02-22T06:36:18.912Z
+tags:
+  - epic-g
+  - ritual
+  - systems
+history:
+  - ts: 2026-02-22T06:36:18.912Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/systems/RitualManager.js (pure logic, no Phaser). State machine: idle→revealing→waiting_input→result→done. Generates colour sigil sequence (5-8 steps). Methods: startRitual(threadCount), match(color), skip(), bank(). Computes Depth (match count) + Resonance (colour pattern score, consecutive same=bonus). Takes callback/event bus. Supersedes TASK-009.
