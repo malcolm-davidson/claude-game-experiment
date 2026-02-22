@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:19.455Z
+updated: 2026-02-22T06:36:29.712Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 41
+next_id: 42
 ---
 
 ## Tasks
@@ -1023,3 +1023,26 @@ history:
 ```
 
 > Tests for src/systems/RitualManager.js: Depth counting on match/skip sequences, Resonance increases with colour runs, Thread depletion ends ritual, Bank returns current state. File: src/__tests__/RitualManager.test.js
+
+### TASK-041 · EPIC-H-01: DevotionManager — localStorage persistence + Mounts data
+
+```yaml
+id: TASK-041
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:29.712Z
+updated_at: 2026-02-22T06:36:29.712Z
+tags:
+  - epic-h
+  - devotion
+  - persistence
+history:
+  - ts: 2026-02-22T06:36:29.712Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/systems/DevotionManager.js: loads from localStorage('ashfall_devotion'), tracks {black,purple,red,green} devotion, addDevotion(color, amount), saveRun(runStats) with weighted formula (essence_spent*1 + ritual_matches*2 + market_purchases*1.5), getMountUnlocks() checks thresholds. Also create src/data/Mounts.js: 4 mount definitions with unlock thresholds, name, description, stat modifiers.
