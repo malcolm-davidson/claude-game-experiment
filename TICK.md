@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:37.681Z
+updated: 2026-02-22T06:34:55.214Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 19
+next_id: 20
 ---
 
 ## Tasks
@@ -517,3 +517,26 @@ history:
 ```
 
 > Stop all systems, emit run-end with stats payload (score, essence earned/spent by colour, arenas completed), navigate to stub SummaryScene, reset all A-03 registry keys on restart. File: src/scenes/GameScene.js
+
+### TASK-019 · EPIC-B-01: ZoneManager — zone constants and player zone tracking
+
+```yaml
+id: TASK-019
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:55.214Z
+updated_at: 2026-02-22T06:34:55.214Z
+tags:
+  - epic-b
+  - systems
+  - zones
+history:
+  - ts: 2026-02-22T06:34:55.214Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/systems/ZoneManager.js with ZONES constants (Bottom y:430-640, Middle y:200-430, Top y:0-200, each with label and reward multiplier), getZone(y), getPlayerZone(player). GameScene calls each frame, writes playerZone to registry. Unblocks: D-01, F-01, I-02.
