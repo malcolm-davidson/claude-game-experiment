@@ -110,6 +110,7 @@ Open `http://localhost:8080` in your browser.
 | Arrow keys | Move dragon |
 | Z | Fire |
 | R | Restart (after game over) |
+| ⭐ GitHub button (top-right) | Open project repository |
 
 **Touch (iOS / Android)**
 
