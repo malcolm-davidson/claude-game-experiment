@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:37:02.744Z
+updated: 2026-02-22T06:37:02.924Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 51
+next_id: 52
 ---
 
 ## Tasks
@@ -1256,3 +1256,26 @@ history:
 ```
 
 > Move existing GitHub button from gameplay HUD to a 'Support' overlay accessible from SummaryScene (I-04). Add Buy Me a Coffee link alongside. Keeps gameplay HUD clean. Supersedes TASK-014.
+
+### TASK-051 · EPIC-J-03: HighScoreManager if not covered by I-04
+
+```yaml
+id: TASK-051
+status: backlog
+priority: low
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:37:02.924Z
+updated_at: 2026-02-22T06:37:02.924Z
+tags:
+  - epic-j
+  - highscore
+  - persistence
+history:
+  - ts: 2026-02-22T06:37:02.924Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/systems/HighScoreManager.js if SummaryScene (I-04) doesn't fully cover this. Stores top-10 runs in localStorage('ashfall_scores') with score/arenas/devotion/timestamp. Evaluate after I-04 is complete — skip if covered.
