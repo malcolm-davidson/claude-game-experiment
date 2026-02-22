@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:29.712Z
+updated: 2026-02-22T06:36:29.895Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 42
+next_id: 43
 ---
 
 ## Tasks
@@ -1046,3 +1046,26 @@ history:
 ```
 
 > Create src/systems/DevotionManager.js: loads from localStorage('ashfall_devotion'), tracks {black,purple,red,green} devotion, addDevotion(color, amount), saveRun(runStats) with weighted formula (essence_spent*1 + ritual_matches*2 + market_purchases*1.5), getMountUnlocks() checks thresholds. Also create src/data/Mounts.js: 4 mount definitions with unlock thresholds, name, description, stat modifiers.
+
+### TASK-042 · EPIC-H-02: Devotion mini-widget in UIScene
+
+```yaml
+id: TASK-042
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:29.895Z
+updated_at: 2026-02-22T06:36:29.895Z
+tags:
+  - epic-h
+  - devotion
+  - ui
+history:
+  - ts: 2026-02-22T06:36:29.895Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add 4 compact bars (8x40px, right edge) to UIScene. Colour icons above each bar, fills based on progress to next unlock threshold. Brief '+N' popup text on in-run devotion gain. Reads devotion_* and devotion_next_threshold_* registry keys. File: src/scenes/UIScene.js
