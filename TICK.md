@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T05:25:36.851Z
+updated: 2026-02-22T05:25:38.124Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 11
+next_id: 12
 ---
 
 ## Tasks
@@ -303,3 +303,26 @@ history:
 ```
 
 > Collectibles appear on screen; player crosses them to add loot. Collection spins the word 'plunder'. Future: good/bad aligned pop-ups depending on build/alignment path. GH Issue #7
+
+### TASK-011 · Improve gameplay balance
+
+```yaml
+id: TASK-011
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T05:25:38.124Z
+updated_at: 2026-02-22T05:25:38.124Z
+tags:
+  - balance
+  - gameplay
+  - gh-18
+history:
+  - ts: 2026-02-22T05:25:38.124Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Game is currently too easy. Adjust difficulty — enemy speed, spawn rates, damage values, or wave scaling. GH Issue #18
