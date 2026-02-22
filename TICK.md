@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:08.186Z
+updated: 2026-02-22T06:34:08.358Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 15
@@ -402,13 +402,13 @@ history:
 
 ```yaml
 id: TASK-014
-status: backlog
+status: done
 priority: low
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T05:25:43.828Z
-updated_at: 2026-02-22T05:25:43.828Z
+updated_at: 2026-02-22T06:34:08.358Z
 tags:
   - ui
   - community
@@ -417,6 +417,11 @@ history:
   - ts: 2026-02-22T05:25:43.828Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-22T06:34:08.358Z
+    who: "@plan"
+    action: completed
+    from: backlog
+    to: done
 ```
 
 > Add a section/screen in the game for GitHub likes and coffee tip links. GH Issue #6
