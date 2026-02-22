@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:57.846Z
+updated: 2026-02-22T06:35:58.027Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 34
+next_id: 35
 ---
 
 ## Tasks
@@ -862,3 +862,26 @@ history:
 ```
 
 > Create src/entities/MarketTile.js: world-space tile with despawn timer (~15s), timer ring visual, zone determines item tier. Writes marketTileActive, marketTileX/Y, marketTileTier, marketTileTimeRemaining to registry. ArenaManager spawns one per arena at midpoint.
+
+### TASK-034 · EPIC-F-02: Market item pool and pricing data
+
+```yaml
+id: TASK-034
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:58.027Z
+updated_at: 2026-02-22T06:35:58.027Z
+tags:
+  - epic-f
+  - market
+  - data
+history:
+  - ts: 2026-02-22T06:35:58.027Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/data/MarketItems.js: 12-16 items {id, label, effect, cost: {color: n}, tier}. Spans all 4 colours. Tier 1=cheap, Tier 2=moderate, Tier 3=top-zone only. Apply via player.applyUpgrade() where possible, new handlers for ritual resources (Thread).
