@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:15.870Z
+updated: 2026-02-22T06:35:16.052Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 24
+next_id: 25
 ---
 
 ## Tasks
@@ -632,3 +632,26 @@ history:
 ```
 
 > Extend LootSystem.tryDrop() to drop coloured essence orbs. Type-to-colour affinity: bat=purple, griffin=red, moth=green, demon=black, dragon=black+red mix. Use gem sprites (gem_amethyst, gem_ruby, gem_jade, skull) from td_items. Overlap-to-collect calls essenceManager.gain(color, 1, 'kill'). Supersedes TASK-010.
+
+### TASK-024 · EPIC-C-03: Essence HUD row in UIScene
+
+```yaml
+id: TASK-024
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:16.052Z
+updated_at: 2026-02-22T06:35:16.052Z
+tags:
+  - epic-c
+  - economy
+  - ui
+history:
+  - ts: 2026-02-22T06:35:16.052Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add 4-icon row to UIScene (bottom or right side). Each slot: gem icon + count text. Pulse tween on gain (scale 1→1.3→1, 200ms). Dim/highlight affordability based on marketTileActive/ritualActive registry. Accessibility: letter label (B/P/R/G) per colour slot. File: src/scenes/UIScene.js
