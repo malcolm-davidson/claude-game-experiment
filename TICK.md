@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:07.475Z
+updated: 2026-02-22T06:34:07.665Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 15
@@ -290,13 +290,13 @@ history:
 
 ```yaml
 id: TASK-010
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T05:25:36.851Z
-updated_at: 2026-02-22T05:25:36.851Z
+updated_at: 2026-02-22T06:34:07.665Z
 tags:
   - gameplay
   - collectibles
@@ -305,6 +305,11 @@ history:
   - ts: 2026-02-22T05:25:36.851Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-22T06:34:07.665Z
+    who: "@plan"
+    action: completed
+    from: backlog
+    to: done
 ```
 
 > Collectibles appear on screen; player crosses them to add loot. Collection spins the word 'plunder'. Future: good/bad aligned pop-ups depending on build/alignment path. GH Issue #7
