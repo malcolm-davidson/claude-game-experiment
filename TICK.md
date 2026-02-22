@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:51.033Z
+updated: 2026-02-22T06:37:02.559Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 49
+next_id: 50
 ---
 
 ## Tasks
@@ -1210,3 +1210,26 @@ history:
 ```
 
 > Review all new HUD components (C-03, F-03, G-03, H-02, I-01 through I-05). Verify: no colour-only meaning (every element has icon+shape), consistent verb vocabulary, readable at 480px width, touch-friendly button sizes in market panel. Fix any violations found.
+
+### TASK-049 · EPIC-J-01: Gameplay balance tuning pass
+
+```yaml
+id: TASK-049
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:37:02.559Z
+updated_at: 2026-02-22T06:37:02.559Z
+tags:
+  - epic-j
+  - balance
+  - polish
+history:
+  - ts: 2026-02-22T06:37:02.559Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Structured tuning of ArenaManager constants, essence drop rates (C-02 values), market item costs (F-02 pricing), tile spawn frequency (D-01 intervals). Game is currently too easy. Supersedes TASK-011.
