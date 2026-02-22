@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:50.664Z
+updated: 2026-02-22T06:36:50.848Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 47
+next_id: 48
 ---
 
 ## Tasks
@@ -1164,3 +1164,26 @@ history:
 ```
 
 > Create src/scenes/SummaryScene.js. Two columns: Lost (unspent essence by colour with icons) / Gained (devotion gains by colour, unlock progress, new mount notification). Top-10 high score in localStorage. 'Play Again' button resets registry. Replaces current inline gameOver() text. Supersedes TASK-013.
+
+### TASK-047 · EPIC-I-05: EventFeed — toast system for game events
+
+```yaml
+id: TASK-047
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:50.848Z
+updated_at: 2026-02-22T06:36:50.848Z
+tags:
+  - epic-i
+  - ui
+  - events
+history:
+  - ts: 2026-02-22T06:36:50.848Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Create src/ui/EventFeed.js: queue-based toast renderer in UIScene space. push(message, color) shows 2s floating text (left edge, stacks upward). Listens to: essence-gained/spent, devotion-gained, arena-escape-penalty, market-tile-spawned, ritual-banked. Consistent verbs: Gain, Spend, Match, Skip, Bank, Buy.
