@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:34:37.510Z
+updated: 2026-02-22T06:34:37.681Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 18
+next_id: 19
 ---
 
 ## Tasks
@@ -494,3 +494,26 @@ history:
 ```
 
 > In GameScene.create(), pre-populate all new registry keys so UIScene can safely read without null checks: essence_black/purple/red/green (0), devotion_* (from localStorage or 0), dashCharges/maxDashCharges (2), arenaIndex, arenaPhase, marketTileActive (false). File: src/scenes/GameScene.js
+
+### TASK-018 · EPIC-A-04: Upgrade gameOver() to run-end flow
+
+```yaml
+id: TASK-018
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:34:37.681Z
+updated_at: 2026-02-22T06:34:37.681Z
+tags:
+  - epic-a
+  - foundation
+  - scenes
+history:
+  - ts: 2026-02-22T06:34:37.681Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Stop all systems, emit run-end with stats payload (score, essence earned/spent by colour, arenas completed), navigate to stub SummaryScene, reset all A-03 registry keys on restart. File: src/scenes/GameScene.js
