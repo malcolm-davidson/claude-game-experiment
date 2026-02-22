@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:36:50.116Z
+updated: 2026-02-22T06:36:50.300Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 44
+next_id: 45
 ---
 
 ## Tasks
@@ -1092,3 +1092,27 @@ history:
 ```
 
 > Add to UIScene: 2 dash charge pips (hollow=depleted, filled gold=charged) and arena index counter 'ARENA 2/6' replacing/supplementing wave text. Reads dashCharges, maxDashCharges, arenaIndex registry keys. File: src/scenes/UIScene.js
+
+### TASK-044 · EPIC-I-02: UIScene: vertical zone indicator
+
+```yaml
+id: TASK-044
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:36:50.300Z
+updated_at: 2026-02-22T06:36:50.300Z
+tags:
+  - epic-i
+  - ui
+  - hud
+  - zones
+history:
+  - ts: 2026-02-22T06:36:50.300Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Add vertical 3-segment zone pill to UIScene (left or right edge): TOP/MID/BOT labels, current zone highlighted, reward multiplier badge. Reads playerZone registry key from ZoneManager. File: src/scenes/UIScene.js
