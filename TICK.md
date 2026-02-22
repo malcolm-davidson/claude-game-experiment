@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T05:25:38.124Z
+updated: 2026-02-22T05:25:39.443Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 12
+next_id: 13
 ---
 
 ## Tasks
@@ -326,3 +326,26 @@ history:
 ```
 
 > Game is currently too easy. Adjust difficulty — enemy speed, spawn rates, damage values, or wave scaling. GH Issue #18
+
+### TASK-012 · Add enemy escape penalty
+
+```yaml
+id: TASK-012
+status: backlog
+priority: medium
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T05:25:39.443Z
+updated_at: 2026-02-22T05:25:39.443Z
+tags:
+  - gameplay
+  - enemies
+  - gh-16
+history:
+  - ts: 2026-02-22T05:25:39.443Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Enemies that pass the bottom of the screen should accumulate into a significant penalty (rather than silently despawning). GH Issue #16
