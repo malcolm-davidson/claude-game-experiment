@@ -2,10 +2,10 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-22T06:35:43.171Z
+updated: 2026-02-22T06:35:43.346Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
-next_id: 32
+next_id: 33
 ---
 
 ## Tasks
@@ -816,3 +816,26 @@ history:
 ```
 
 > Replace silent y>700 destroy in EnemyWyvern with arenaManager.recordEscape(type). ArenaManager maintains _escapeTokens = {melee, ranged, defense}. Type-to-category: bat/griffin/dragon=melee, moth/demon=ranged. Tokens accumulate within a run. Supersedes TASK-012. Files: src/entities/EnemyWyvern.js, src/systems/ArenaManager.js
+
+### TASK-032 · EPIC-E-02: Token-weighted spawn pool
+
+```yaml
+id: TASK-032
+status: backlog
+priority: high
+assigned_to: null
+claimed_by: null
+created_by: "@malcolm-davidson"
+created_at: 2026-02-22T06:35:43.346Z
+updated_at: 2026-02-22T06:35:43.346Z
+tags:
+  - epic-e
+  - wave-memory
+  - enemies
+history:
+  - ts: 2026-02-22T06:35:43.346Z
+    who: "@malcolm-davidson"
+    action: created
+```
+
+> Update ArenaManager _poolForArena() to weight enemy type selection by escape tokens (+1 weight per token per category, cap +5). Emit arena-escape-penalty event. Brief screen toast 'X escaped — more incoming!' using existing wave-announcement tween pattern. File: src/systems/ArenaManager.js
