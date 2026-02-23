@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:56:04.686Z
+updated: 2026-02-23T06:01:03.460Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1024,13 +1024,13 @@ history:
 
 ```yaml
 id: TASK-033
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:57.846Z
-updated_at: 2026-02-22T06:35:57.846Z
+updated_at: 2026-02-23T06:01:00.796Z
 tags:
   - epic-f
   - market
@@ -1039,6 +1039,16 @@ history:
   - ts: 2026-02-22T06:35:57.846Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:57.040Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:01:00.796Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/entities/MarketTile.js: world-space tile with despawn timer (~15s), timer ring visual, zone determines item tier. Writes marketTileActive, marketTileX/Y, marketTileTier, marketTileTimeRemaining to registry. ArenaManager spawns one per arena at midpoint.
@@ -1047,13 +1057,13 @@ history:
 
 ```yaml
 id: TASK-034
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.027Z
-updated_at: 2026-02-22T06:35:58.027Z
+updated_at: 2026-02-23T06:01:01.699Z
 tags:
   - epic-f
   - market
@@ -1062,6 +1072,16 @@ history:
   - ts: 2026-02-22T06:35:58.027Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:57.906Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:01:01.699Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/data/MarketItems.js: 12-16 items {id, label, effect, cost: {color: n}, tier}. Spans all 4 colours. Tier 1=cheap, Tier 2=moderate, Tier 3=top-zone only. Apply via player.applyUpgrade() where possible, new handlers for ritual resources (Thread).
@@ -1070,13 +1090,13 @@ history:
 
 ```yaml
 id: TASK-035
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.205Z
-updated_at: 2026-02-22T06:35:58.205Z
+updated_at: 2026-02-23T06:01:02.552Z
 tags:
   - epic-f
   - market
@@ -1085,6 +1105,16 @@ history:
   - ts: 2026-02-22T06:35:58.205Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:58.809Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:01:02.552Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Physics overlap with MarketTile triggers: scene.physics.world.timeScale=0.3, 160x200 overlay panel opens near tile, shows 2-3 zone-tier-filtered items with icon+label+colour costs, affordability states, one-button purchase flow. Restores time scale on close. Files: src/entities/MarketTile.js, src/scenes/GameScene.js
@@ -1093,13 +1123,13 @@ history:
 
 ```yaml
 id: TASK-036
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.382Z
-updated_at: 2026-02-22T06:35:58.382Z
+updated_at: 2026-02-23T06:01:03.460Z
 tags:
   - epic-f
   - market
@@ -1108,6 +1138,16 @@ history:
   - ts: 2026-02-22T06:35:58.382Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:59.756Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:01:03.460Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Unit tests for MarketItems data file (tier filtering, cost structure) and affordability check path. No Phaser dependency. File: src/__tests__/MarketItems.test.js
