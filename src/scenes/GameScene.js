@@ -3,6 +3,7 @@ import { EnemyWyvern } from '../entities/EnemyWyvern.js';
 import { ArenaManager } from '../systems/ArenaManager.js';
 import { LootSystem } from '../systems/LootSystem.js';
 import { ZoneManager } from '../systems/ZoneManager.js';
+import { EssenceManager } from '../systems/EssenceManager.js';
 import {
   onBulletHitEnemy,
   onEnemyBulletHitPlayer,
@@ -120,8 +121,21 @@ export class GameScene extends Phaser.Scene {
   }
 
   _setupSystems() {
-    this.arenaManager = new ArenaManager(this);
-    this.lootSystem   = new LootSystem(this);
+    this.essenceManager = new EssenceManager(this);
+    this.arenaManager   = new ArenaManager(this);
+    this.lootSystem     = new LootSystem(this);
+
+    // Track essence earned per colour for the run-end stats payload
+    this.events.on('essence-gained', ({ color, amount }) => {
+      if (this._runStats?.essenceEarned) {
+        this._runStats.essenceEarned[color] = (this._runStats.essenceEarned[color] ?? 0) + amount;
+      }
+    });
+    this.events.on('essence-spent', ({ color, amount }) => {
+      if (this._runStats?.essenceSpent) {
+        this._runStats.essenceSpent[color] = (this._runStats.essenceSpent[color] ?? 0) + amount;
+      }
+    });
   }
 
   _setupCollisions() {
