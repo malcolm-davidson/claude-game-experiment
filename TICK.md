@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T06:03:17.407Z
+updated: 2026-02-23T06:03:18.364Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1184,13 +1184,13 @@ history:
 
 ```yaml
 id: TASK-038
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.096Z
-updated_at: 2026-02-22T06:36:19.096Z
+updated_at: 2026-02-23T06:03:18.364Z
 tags:
   - epic-g
   - ritual
@@ -1199,6 +1199,11 @@ history:
   - ts: 2026-02-22T06:36:19.096Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:18.364Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Create src/data/RitualRewards.js: maps (depth, resonance) to reward definitions. Low=minor stat bumps via player.applyUpgrade(), high=compound effects ('all essence gain +1 for rest of run'), very high=rare placeholder slots. File: src/data/RitualRewards.js
