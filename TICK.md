@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:49:18.484Z
+updated: 2026-02-23T05:49:19.424Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -925,13 +925,13 @@ history:
 
 ```yaml
 id: TASK-030
-status: in_progress
+status: done
 priority: medium
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.611Z
-updated_at: 2026-02-23T05:47:25.592Z
+updated_at: 2026-02-23T05:49:19.424Z
 tags:
   - epic-d
   - tiles
@@ -945,6 +945,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:49:19.424Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add _slowed flag to EnemyWyvern. When overlapping Slow tile, velocity Y *= 0.5. Velocity restored on exit (overlap exit tracking). Visual: blue-tinted floor tile. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
