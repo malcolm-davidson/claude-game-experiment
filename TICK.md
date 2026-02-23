@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:54:54.975Z
+updated: 2026-02-23T05:54:55.887Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -986,13 +986,13 @@ history:
 
 ```yaml
 id: TASK-032
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:43.346Z
-updated_at: 2026-02-22T06:35:43.346Z
+updated_at: 2026-02-23T05:54:55.887Z
 tags:
   - epic-e
   - wave-memory
@@ -1001,6 +1001,11 @@ history:
   - ts: 2026-02-22T06:35:43.346Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:54:55.887Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Update ArenaManager _poolForArena() to weight enemy type selection by escape tokens (+1 weight per token per category, cap +5). Emit arena-escape-penalty event. Brief screen toast 'X escaped — more incoming!' using existing wave-announcement tween pattern. File: src/systems/ArenaManager.js
