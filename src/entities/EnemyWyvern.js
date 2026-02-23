@@ -64,10 +64,18 @@ const ENEMY_TYPES = {
 };
 
 export class EnemyWyvern {
-  constructor(scene, x, y, type = 'griffin') {
+  /**
+   * @param {Phaser.Scene} scene
+   * @param {number} x
+   * @param {number} y
+   * @param {string} type
+   * @param {{ speedMult?: number, essenceDropBonus?: number, lootBonus?: number }} [zoneBonus]
+   */
+  constructor(scene, x, y, type = 'griffin', zoneBonus = {}) {
     this.scene = scene;
     const cfg = ENEMY_TYPES[type] ?? ENEMY_TYPES.griffin;
     this._cfg = cfg;
+    this._zoneBonus = zoneBonus;
 
     this.hp = cfg.hp;
     this._startX = x;
@@ -89,7 +97,8 @@ export class EnemyWyvern {
     // Add to group BEFORE setting body properties — group.add() resets the body
     scene.enemies.add(this.sprite);
     this.sprite.body.setSize(cfg.bodySize, cfg.bodySize);
-    this.sprite.setVelocityY(cfg.speed + Phaser.Math.Between(0, 40));
+    const speedMult = zoneBonus.speedMult ?? 1.0;
+    this.sprite.setVelocityY((cfg.speed + Phaser.Math.Between(0, 40)) * speedMult);
     this.sprite.setData('entity', this);
 
     scene.events.on('update', this._update, this);

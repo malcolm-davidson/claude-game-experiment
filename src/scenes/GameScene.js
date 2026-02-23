@@ -2,6 +2,7 @@ import { Player } from '../entities/Player.js';
 import { EnemyWyvern } from '../entities/EnemyWyvern.js';
 import { ArenaManager } from '../systems/ArenaManager.js';
 import { LootSystem } from '../systems/LootSystem.js';
+import { ZoneManager } from '../systems/ZoneManager.js';
 import {
   onBulletHitEnemy,
   onEnemyBulletHitPlayer,
@@ -40,6 +41,12 @@ export class GameScene extends Phaser.Scene {
     this.player.update(time, delta, this.cursors, this.fireKey);
     this.arenaManager.update(time, delta);
 
+    // B-01: track player zone each frame
+    const zone = ZoneManager.getPlayerZone(this.player);
+    if (zone.id !== this.registry.get('playerZone')) {
+      this.registry.set('playerZone', zone.id);
+    }
+
     // Scroll parallax background
     this.bg.tilePositionY -= 0.5;
 
@@ -55,6 +62,12 @@ export class GameScene extends Phaser.Scene {
   _setupBackground() {
     this.bg = this.add.tileSprite(0, 0, 480, 640, 'background')
       .setOrigin(0, 0);
+
+    // B-02: subtle semi-transparent zone bands (fixed screen-space overlays)
+    // Top zone (y 0–200) — dark red tint, higher danger
+    this.add.rectangle(0, 0, 480, 200, 0x330000, 0.10).setOrigin(0, 0).setDepth(1);
+    // Bottom zone (y 430–640) — blue-grey tint, safer
+    this.add.rectangle(0, 430, 480, 210, 0x001833, 0.10).setOrigin(0, 0).setDepth(1);
   }
 
   _setupGroups() {
@@ -101,6 +114,9 @@ export class GameScene extends Phaser.Scene {
 
     // Market tile active state
     this.registry.set('marketTileActive', false);
+
+    // Current player zone (updated each frame)
+    this.registry.set('playerZone', 'bottom');
   }
 
   _setupSystems() {
@@ -186,8 +202,8 @@ export class GameScene extends Phaser.Scene {
     this.registry.set('score', current + points);
   }
 
-  spawnEnemy(x, y, type = 'griffin') {
-    new EnemyWyvern(this, x, y, type);
+  spawnEnemy(x, y, type = 'griffin', zoneBonus = {}) {
+    new EnemyWyvern(this, x, y, type, zoneBonus);
   }
 
   /**

@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:24:56.625Z
+updated: 2026-02-23T05:32:57.324Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -562,13 +562,13 @@ history:
 
 ```yaml
 id: TASK-019
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:55.214Z
-updated_at: 2026-02-22T06:34:55.214Z
+updated_at: 2026-02-23T05:32:55.451Z
 tags:
   - epic-b
   - systems
@@ -577,6 +577,16 @@ history:
   - ts: 2026-02-22T06:34:55.214Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:31:46.876Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:32:55.451Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/ZoneManager.js with ZONES constants (Bottom y:430-640, Middle y:200-430, Top y:0-200, each with label and reward multiplier), getZone(y), getPlayerZone(player). GameScene calls each frame, writes playerZone to registry. Unblocks: D-01, F-01, I-02.
@@ -585,13 +595,13 @@ history:
 
 ```yaml
 id: TASK-020
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:55.383Z
-updated_at: 2026-02-22T06:34:55.383Z
+updated_at: 2026-02-23T05:32:56.401Z
 tags:
   - epic-b
   - visuals
@@ -600,6 +610,16 @@ history:
   - ts: 2026-02-22T06:34:55.383Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:31:47.971Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:32:56.401Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > In GameScene render subtle semi-transparent horizontal strips at zone boundaries (alpha 0.08-0.12). Dark red at top, neutral in middle, blue-grey at bottom. Scrolls with bg.tilePositionY. File: src/scenes/GameScene.js
@@ -608,13 +628,13 @@ history:
 
 ```yaml
 id: TASK-021
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:55.558Z
-updated_at: 2026-02-22T06:34:55.558Z
+updated_at: 2026-02-23T05:32:57.324Z
 tags:
   - epic-b
   - systems
@@ -623,6 +643,16 @@ history:
   - ts: 2026-02-22T06:34:55.558Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:31:49.098Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:32:57.324Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Update ArenaManager _poolForArena() so top zone enemies get +20% speed and higher essence drop chance; bottom zone has fewer enemies but higher loot rate. Adds zoneBonus property to spawn config. File: src/systems/ArenaManager.js
