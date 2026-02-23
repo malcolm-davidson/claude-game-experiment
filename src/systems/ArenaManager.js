@@ -107,18 +107,47 @@ export class ArenaManager {
   _updateSpawning(delta) {
     this._spawnTimer += delta;
 
-    if (this._spawnTimer >= this._spawnInterval &&
+    // B-03: read current player zone to adjust spawn pressure
+    const playerZone = this.scene.registry.get('playerZone') ?? 'middle';
+
+    // Bottom zone: reduce spawn pressure (safer area, lower reward)
+    const spawnInterval = playerZone === 'bottom'
+      ? this._spawnInterval * 1.35
+      : this._spawnInterval;
+
+    if (this._spawnTimer >= spawnInterval &&
         this._enemiesThisArena < this._maxEnemies) {
       this._spawnTimer = 0;
       this._enemiesThisArena++;
       const pool = this._poolForArena();
       const type = pool[Phaser.Math.Between(0, pool.length - 1)];
+
+      // B-03: build zone bonus config for spawnEnemy
+      const zoneBonus = this._zoneBonus(playerZone);
+
       this.scene.spawnEnemy(
         Phaser.Math.Between(40, 440),
         -40,
         type,
+        zoneBonus,
       );
     }
+  }
+
+  /**
+   * Returns a zoneBonus config object based on current player zone.
+   * Top zone: +20% enemy speed, higher essence drop chance.
+   * Bottom zone: fewer spawns (handled above), higher loot rate.
+   * Middle: no modifier.
+   */
+  _zoneBonus(playerZone) {
+    if (playerZone === 'top') {
+      return { speedMult: 1.2, essenceDropBonus: 0.3, lootBonus: 0 };
+    }
+    if (playerZone === 'bottom') {
+      return { speedMult: 1.0, essenceDropBonus: 0,   lootBonus: 0.4 };
+    }
+    return { speedMult: 1.0, essenceDropBonus: 0, lootBonus: 0 };
   }
 
   _showAnnouncement(message) {
