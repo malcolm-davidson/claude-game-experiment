@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T06:03:18.364Z
+updated: 2026-02-23T06:03:19.278Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1212,13 +1212,13 @@ history:
 
 ```yaml
 id: TASK-039
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.274Z
-updated_at: 2026-02-22T06:36:19.274Z
+updated_at: 2026-02-23T06:03:19.278Z
 tags:
   - epic-g
   - ritual
@@ -1227,6 +1227,11 @@ history:
   - ts: 2026-02-22T06:36:19.274Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:19.278Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Create src/scenes/RitualScene.js — launches over GameScene at arena-end event. Shows: current sigil (large + colour icon), sequence history (row of small icons), Thread count, Depth, Resonance bar, available Essence. Input: 4 colour Match buttons + Skip + Bank. Preview consequences before input. Applies RitualManager outcome on completion, resumes game.
