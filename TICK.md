@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:47:25.592Z
+updated: 2026-02-23T05:49:15.646Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -793,13 +793,13 @@ history:
 
 ```yaml
 id: TASK-026
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:32.910Z
-updated_at: 2026-02-23T05:47:22.125Z
+updated_at: 2026-02-23T05:49:15.646Z
 tags:
   - epic-d
   - tiles
@@ -813,6 +813,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:49:15.646Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/TileManager.js: spawns tiles at zone-appropriate Y band, tile has physics overlap body, type config {type, textureKey, radius}, manages lifecycle (destroy at y>700). scene.tacTiles group. ArenaManager calls tileManager.spawnTile(type, zone) at intervals.
