@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:22:30.850Z
+updated: 2026-02-23T05:22:33.707Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -463,13 +463,13 @@ history:
 
 ```yaml
 id: TASK-016
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:37.341Z
-updated_at: 2026-02-22T06:34:37.341Z
+updated_at: 2026-02-23T05:22:33.707Z
 tags:
   - epic-a
   - player
@@ -478,6 +478,11 @@ history:
   - ts: 2026-02-22T06:34:37.341Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:22:33.707Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Add dash mechanic: 2 charges, ~120ms iframes (_dashing flag), dashCharges registry key, particle burst on dash. Input: double-tap direction or Shift/X key. File: src/entities/Player.js
