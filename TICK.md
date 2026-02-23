@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:57:57.906Z
+updated: 2026-02-23T05:57:58.809Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1080,13 +1080,13 @@ history:
 
 ```yaml
 id: TASK-035
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.205Z
-updated_at: 2026-02-22T06:35:58.205Z
+updated_at: 2026-02-23T05:57:58.809Z
 tags:
   - epic-f
   - market
@@ -1095,6 +1095,11 @@ history:
   - ts: 2026-02-22T06:35:58.205Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:58.809Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Physics overlap with MarketTile triggers: scene.physics.world.timeScale=0.3, 160x200 overlay panel opens near tile, shows 2-3 zone-tier-filtered items with icon+label+colour costs, affordability states, one-button purchase flow. Restores time scale on close. Files: src/entities/MarketTile.js, src/scenes/GameScene.js
