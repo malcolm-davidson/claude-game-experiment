@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:32:56.401Z
+updated: 2026-02-23T05:32:57.324Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -628,13 +628,13 @@ history:
 
 ```yaml
 id: TASK-021
-status: in_progress
+status: done
 priority: medium
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:55.558Z
-updated_at: 2026-02-23T05:31:49.098Z
+updated_at: 2026-02-23T05:32:57.324Z
 tags:
   - epic-b
   - systems
@@ -648,6 +648,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:32:57.324Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Update ArenaManager _poolForArena() so top zone enemies get +20% speed and higher essence drop chance; bottom zone has fewer enemies but higher loot rate. Adds zoneBonus property to spawn config. File: src/systems/ArenaManager.js
