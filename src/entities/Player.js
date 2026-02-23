@@ -22,12 +22,38 @@ export class Player {
     this._touchX     = null; // null = no active touch
     this._touchY     = null;
 
+    // Dash state
+    this._dashCharges    = 2;
+    this._maxDashCharges = 2;
+    this._dashing        = false;      // true during iframe window
+    this._dashTimer      = 0;
+    this._dashDuration   = 120;        // ms of iframe / speed burst
+    this._dashCooldown   = 800;        // ms per charge recharge
+    this._dashRechargeTimer = 0;
+    this._lastDashDir    = { x: 0, y: -1 }; // default: forward
+
     this.sprite = scene.physics.add.sprite(x, y, 'dragon');
     this.sprite.setDisplaySize(64, 96);
     this.sprite.body.setSize(40, 70);
     this.sprite.setCollideWorldBounds(true);
     this.sprite.setDepth(10);
     this.sprite.setFrame(1);
+
+    // Dash key (Shift or X)
+    this._dashKey  = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+    this._dashKeyX = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+
+    // Dash particle emitter (burst on demand, frequency=0 = manual emit only)
+    this._dashEmitter = scene.add.particles(x, y, 'particle', {
+      speed: { min: 80, max: 180 },
+      angle: { min: 0, max: 360 },
+      scale: { start: 1.2, end: 0 },
+      lifespan: 250,
+      tint: [0x88aaff, 0xaaccff, 0xffffff],
+      frequency: -1, // manual explode
+      depth: 11,
+      quantity: 14,
+    });
 
     // Thrust particle emitter
     this._thrustEmitter = scene.add.particles(x, y + 24, 'particle', {
@@ -44,6 +70,17 @@ export class Player {
   update(time, delta, cursors, fireKey) {
     const { sprite, stats } = this;
     sprite.setVelocity(0);
+
+    this._updateDash(delta, cursors);
+
+    // While dashing, skip normal movement/firing control
+    if (this._dashing) {
+      sprite.setVelocityX(this._lastDashDir.x * stats.speed * 3);
+      sprite.setVelocityY(this._lastDashDir.y * stats.speed * 3);
+      this._thrustEmitter.setPosition(sprite.x, sprite.y + 24);
+      this._dashEmitter.setPosition(sprite.x, sprite.y);
+      return;
+    }
 
     const isTouching = this._touchX !== null;
 
@@ -75,8 +112,9 @@ export class Player {
       }
     }
 
-    // Keep thrust emitter attached
+    // Keep emitters attached
     this._thrustEmitter.setPosition(sprite.x, sprite.y + 24);
+    this._dashEmitter.setPosition(sprite.x, sprite.y);
 
     // Banking pose based on horizontal movement
     const vx = sprite.body.velocity.x;
@@ -132,6 +170,59 @@ export class Player {
   }
 
   // ── Private ──────────────────────────────────────────────────────────
+
+  _updateDash(delta, cursors) {
+    // Tick active dash timer
+    if (this._dashing) {
+      this._dashTimer -= delta;
+      if (this._dashTimer <= 0) {
+        this._dashing = false;
+      }
+    }
+
+    // Recharge a consumed charge
+    if (this._dashCharges < this._maxDashCharges) {
+      this._dashRechargeTimer -= delta;
+      if (this._dashRechargeTimer <= 0) {
+        this._dashCharges++;
+        this._dashRechargeTimer = this._dashCooldown;
+        this.scene.registry.set('dashCharges', this._dashCharges);
+      }
+    }
+
+    // Consume a charge on button press (not while already dashing)
+    const dashPressed = Phaser.Input.Keyboard.JustDown(this._dashKey) ||
+                        Phaser.Input.Keyboard.JustDown(this._dashKeyX);
+    if (dashPressed && !this._dashing && this._dashCharges > 0) {
+      // Derive direction from current input
+      let dx = 0, dy = 0;
+      if (cursors.left.isDown)  dx -= 1;
+      if (cursors.right.isDown) dx += 1;
+      if (cursors.up.isDown)    dy -= 1;
+      if (cursors.down.isDown)  dy += 1;
+
+      // Normalise; default to forward (up) if no input
+      const len = Math.sqrt(dx * dx + dy * dy);
+      if (len > 0) {
+        this._lastDashDir = { x: dx / len, y: dy / len };
+      } else {
+        this._lastDashDir = { x: 0, y: -1 };
+      }
+
+      this._dashing     = true;
+      this._dashTimer   = this._dashDuration;
+      this._dashCharges--;
+      if (this._dashCharges < this._maxDashCharges) {
+        this._dashRechargeTimer = this._dashCooldown;
+      }
+
+      // Burst particles
+      this._dashEmitter.setPosition(this.sprite.x, this.sprite.y);
+      this._dashEmitter.explode(14);
+
+      this.scene.registry.set('dashCharges', this._dashCharges);
+    }
+  }
 
   _fire(time) {
     this._lastFired = time;
