@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:42:47.605Z
+updated: 2026-02-23T05:42:48.472Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -727,13 +727,13 @@ history:
 
 ```yaml
 id: TASK-024
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:16.052Z
-updated_at: 2026-02-23T05:40:54.153Z
+updated_at: 2026-02-23T05:42:48.472Z
 tags:
   - epic-c
   - economy
@@ -747,6 +747,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:42:48.472Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add 4-icon row to UIScene (bottom or right side). Each slot: gem icon + count text. Pulse tween on gain (scale 1→1.3→1, 200ms). Dim/highlight affordability based on marketTileActive/ritualActive registry. Accessibility: letter label (B/P/R/G) per colour slot. File: src/scenes/UIScene.js
