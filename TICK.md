@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T06:05:55.666Z
+updated: 2026-02-23T06:05:56.705Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1255,13 +1255,13 @@ history:
 
 ```yaml
 id: TASK-040
-status: in_progress
+status: done
 priority: medium
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.455Z
-updated_at: 2026-02-23T06:03:20.214Z
+updated_at: 2026-02-23T06:05:56.705Z
 tags:
   - epic-g
   - ritual
@@ -1275,6 +1275,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T06:05:56.705Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Tests for src/systems/RitualManager.js: Depth counting on match/skip sequences, Resonance increases with colour runs, Thread depletion ends ritual, Bank returns current state. File: src/__tests__/RitualManager.test.js
