@@ -27,6 +27,11 @@ export class BootScene extends Phaser.Scene {
     this.load.image('loot_hp',       'assets/td_items/td_items_flask_red.png');
     this.load.image('loot_attack',   'assets/td_items/td_items_flask_blue.png');
     this.load.image('loot_firerate', 'assets/td_items/td_items_coins_gold.png');
+    // Tactical tile sprites
+    this.load.image('tile_pit',      'assets/td_world/td_world_floor_pit.png');
+    this.load.image('tile_silence',  'assets/td_world/td_world_magic_a.png');
+    this.load.image('tile_weakness', 'assets/td_world/td_world_trap.png');
+    this.load.image('tile_slow',     'assets/td_world/td_world_mud_a1.png');
     // Essence orb sprites (one per colour)
     this.load.image('essence_black',  'assets/td_items/td_items_skull.png');
     this.load.image('essence_purple', 'assets/td_items/td_items_gem_amethyst.png');

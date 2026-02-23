@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:42:49.389Z
+updated: 2026-02-23T05:49:19.424Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -793,13 +793,13 @@ history:
 
 ```yaml
 id: TASK-026
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:32.910Z
-updated_at: 2026-02-22T06:35:32.910Z
+updated_at: 2026-02-23T05:49:15.646Z
 tags:
   - epic-d
   - tiles
@@ -808,6 +808,16 @@ history:
   - ts: 2026-02-22T06:35:32.910Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:22.125Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:49:15.646Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/TileManager.js: spawns tiles at zone-appropriate Y band, tile has physics overlap body, type config {type, textureKey, radius}, manages lifecycle (destroy at y>700). scene.tacTiles group. ArenaManager calls tileManager.spawnTile(type, zone) at intervals.
@@ -816,13 +826,13 @@ history:
 
 ```yaml
 id: TASK-027
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.084Z
-updated_at: 2026-02-22T06:35:33.084Z
+updated_at: 2026-02-23T05:49:16.605Z
 tags:
   - epic-d
   - tiles
@@ -831,6 +841,16 @@ history:
   - ts: 2026-02-22T06:35:33.084Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:23.020Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:49:16.605Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > First tile type. Visual: td_world_floor_pit.png. Behaviour: enemy overlaps pit → takeDamage(entity.hp) (instant kill) + particle burst. Pit stays active for scroll lifetime. Depends on D-01.
@@ -839,13 +859,13 @@ history:
 
 ```yaml
 id: TASK-028
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.259Z
-updated_at: 2026-02-22T06:35:33.259Z
+updated_at: 2026-02-23T05:49:17.538Z
 tags:
   - epic-d
   - tiles
@@ -854,6 +874,16 @@ history:
   - ts: 2026-02-22T06:35:33.259Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:23.895Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:49:17.538Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add _silenced flag to EnemyWyvern. When overlapping Silence tile, suppress _shootTimer. Flag cleared each frame if not overlapping. Visual: purple-tinted tile or voidimpact FX overlay. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
@@ -862,13 +892,13 @@ history:
 
 ```yaml
 id: TASK-029
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.435Z
-updated_at: 2026-02-22T06:35:33.435Z
+updated_at: 2026-02-23T05:49:18.484Z
 tags:
   - epic-d
   - tiles
@@ -877,6 +907,16 @@ history:
   - ts: 2026-02-22T06:35:33.435Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:24.771Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:49:18.484Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add _weakened flag to EnemyWyvern. When overlapping Weakness tile, takeDamage(amount) deals amount*2. Visual: red-tinted td_world_trap.png. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
@@ -885,13 +925,13 @@ history:
 
 ```yaml
 id: TASK-030
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.611Z
-updated_at: 2026-02-22T06:35:33.611Z
+updated_at: 2026-02-23T05:49:19.424Z
 tags:
   - epic-d
   - tiles
@@ -900,6 +940,16 @@ history:
   - ts: 2026-02-22T06:35:33.611Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:25.592Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:49:19.424Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add _slowed flag to EnemyWyvern. When overlapping Slow tile, velocity Y *= 0.5. Velocity restored on exit (overlap exit tracking). Visual: blue-tinted floor tile. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
