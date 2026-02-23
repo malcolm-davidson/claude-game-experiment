@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:21:20.054Z
+updated: 2026-02-23T05:22:30.850Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -430,13 +430,13 @@ history:
 
 ```yaml
 id: TASK-015
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:34:37.167Z
-updated_at: 2026-02-23T05:21:20.054Z
+updated_at: 2026-02-23T05:22:30.850Z
 tags:
   - epic-a
   - systems
@@ -450,6 +450,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:22:30.850Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Replace WaveManager with ArenaManager. Add arena phases (spawning/elite_warning/transitioning), tunable arena duration (~60s), arena-start/arena-end/run-end events. Preserve _poolForArena() enemy pool logic. Files: src/systems/ArenaManager.js (new), src/scenes/GameScene.js
