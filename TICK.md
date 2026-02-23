@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:57:57.040Z
+updated: 2026-02-23T05:57:57.906Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1052,13 +1052,13 @@ history:
 
 ```yaml
 id: TASK-034
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.027Z
-updated_at: 2026-02-22T06:35:58.027Z
+updated_at: 2026-02-23T05:57:57.906Z
 tags:
   - epic-f
   - market
@@ -1067,6 +1067,11 @@ history:
   - ts: 2026-02-22T06:35:58.027Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:57.906Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Create src/data/MarketItems.js: 12-16 items {id, label, effect, cost: {color: n}, tier}. Spans all 4 colours. Tier 1=cheap, Tier 2=moderate, Tier 3=top-zone only. Apply via player.applyUpgrade() where possible, new handlers for ritual resources (Thread).
