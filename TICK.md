@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:40:55.218Z
+updated: 2026-02-23T05:42:46.776Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -661,13 +661,13 @@ history:
 
 ```yaml
 id: TASK-022
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:15.698Z
-updated_at: 2026-02-23T05:40:51.934Z
+updated_at: 2026-02-23T05:42:46.776Z
 tags:
   - epic-c
   - economy
@@ -681,6 +681,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:42:46.776Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/EssenceManager.js: gain(color, amount, source), spend(color, amount), canAfford(costs), getAll(). Emits essence-gained/essence-spent events via scene.events. Writes registry keys from A-03. source param used by DevotionManager (H-01).
