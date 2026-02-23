@@ -4,6 +4,7 @@ import { ArenaManager } from '../systems/ArenaManager.js';
 import { LootSystem } from '../systems/LootSystem.js';
 import { ZoneManager } from '../systems/ZoneManager.js';
 import { EssenceManager } from '../systems/EssenceManager.js';
+import { TileManager } from '../systems/TileManager.js';
 import {
   onBulletHitEnemy,
   onEnemyBulletHitPlayer,
@@ -41,6 +42,7 @@ export class GameScene extends Phaser.Scene {
   update(time, delta) {
     this.player.update(time, delta, this.cursors, this.fireKey);
     this.arenaManager.update(time, delta);
+    this.tileManager.update();
 
     // B-01: track player zone each frame
     const zone = ZoneManager.getPlayerZone(this.player);
@@ -76,6 +78,7 @@ export class GameScene extends Phaser.Scene {
     this.enemyBullets  = this.physics.add.group();
     this.enemies       = this.physics.add.group();
     this.lootItems     = this.physics.add.group();
+    this.tacTiles      = this.physics.add.group(); // tactical tiles (D-01)
   }
 
   _setupPlayer() {
@@ -122,6 +125,7 @@ export class GameScene extends Phaser.Scene {
 
   _setupSystems() {
     this.essenceManager = new EssenceManager(this);
+    this.tileManager    = new TileManager(this);
     this.arenaManager   = new ArenaManager(this);
     this.lootSystem     = new LootSystem(this);
 
@@ -161,6 +165,31 @@ export class GameScene extends Phaser.Scene {
       this.lootItems,
       (playerSprite, loot) =>
         onPlayerCollectLoot(playerSprite, loot, this.lootSystem),
+    );
+
+    // Tactical tile effects on enemies (D-02 through D-05)
+    this.physics.add.overlap(
+      this.tacTiles,
+      this.enemies,
+      (tileSprite, enemySprite) => {
+        const type   = tileSprite.getData('tileType');
+        const entity = enemySprite.getData('entity');
+        if (!entity) return;
+
+        if (type === 'pit') {
+          // D-02: instant kill — takeDamage(hp) so even armoured enemies die
+          entity.takeDamage(Math.max(entity.hp, 1));
+        } else if (type === 'silence') {
+          // D-03: flag set; EnemyWyvern._update suppresses shooting
+          entity._silenced = true;
+        } else if (type === 'weakness') {
+          // D-04: flag set; EnemyWyvern.takeDamage doubles damage
+          entity._weakened = true;
+        } else if (type === 'slow') {
+          // D-05: flag set; EnemyWyvern._update halves velocity
+          entity._slowed = true;
+        }
+      },
     );
   }
 

@@ -87,6 +87,11 @@ export class EnemyWyvern {
       ? Phaser.Math.Between(...cfg.shootInterval)
       : 0;
 
+    // Tile effect flags — reset each frame; set by GameScene tile overlaps
+    this._silenced = false;  // D-03: suppress shooting
+    this._weakened = false;  // D-04: take double damage
+    this._slowed   = false;  // D-05: half velocity
+
     this._frameKeys = [`${cfg.spriteBase}_d1`, `${cfg.spriteBase}_d2`];
 
     this.sprite = scene.physics.add.sprite(x, y, this._frameKeys[0]);
@@ -99,7 +104,8 @@ export class EnemyWyvern {
     scene.enemies.add(this.sprite);
     this.sprite.body.setSize(cfg.bodySize, cfg.bodySize);
     const speedMult = zoneBonus.speedMult ?? 1.0;
-    this.sprite.setVelocityY((cfg.speed + Phaser.Math.Between(0, 40)) * speedMult);
+    this._baseVelocityY = (cfg.speed + Phaser.Math.Between(0, 40)) * speedMult;
+    this.sprite.setVelocityY(this._baseVelocityY);
     this.sprite.setData('entity', this);
 
     scene.events.on('update', this._update, this);
@@ -109,7 +115,8 @@ export class EnemyWyvern {
   }
 
   takeDamage(amount) {
-    this.hp -= amount;
+    // D-04: weakness tile doubles incoming damage
+    this.hp -= this._weakened ? amount * 2 : amount;
     this.scene.tweens.add({
       targets: this.sprite,
       alpha: 0.3,
@@ -124,17 +131,27 @@ export class EnemyWyvern {
   _update(time, delta) {
     if (!this.sprite.active) return;
 
+    // Reset tile-effect flags — overlap callbacks will re-set them this frame
+    this._silenced = false;
+    this._weakened = false;
+    this._slowed   = false;
+
     // Sine-wave horizontal drift
     this.sprite.x = this._startX +
       Math.sin(time * this._frequency * Math.PI * 2) * this._amplitude;
+
+    // D-05: apply slow — halve downward velocity while flag is set
+    this.sprite.setVelocityY(this._slowed
+      ? this._baseVelocityY * 0.5
+      : this._baseVelocityY);
 
     // 2-frame flap animation (toggle every 250ms)
     this.sprite.setTexture(Math.floor(time / 250) % 2 === 0
       ? this._frameKeys[0]
       : this._frameKeys[1]);
 
-    // Shoot periodically (0 = never)
-    if (this._shootInterval > 0) {
+    // D-03: suppress shooting while silenced
+    if (!this._silenced && this._shootInterval > 0) {
       this._shootTimer += delta;
       if (this._shootTimer >= this._shootInterval) {
         this._shootTimer = 0;
