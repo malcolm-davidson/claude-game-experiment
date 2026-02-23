@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:40:54.153Z
+updated: 2026-02-23T05:40:55.218Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -745,13 +745,13 @@ history:
 
 ```yaml
 id: TASK-025
-status: backlog
+status: in_progress
 priority: medium
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:16.229Z
-updated_at: 2026-02-22T06:35:16.229Z
+updated_at: 2026-02-23T05:40:55.218Z
 tags:
   - epic-c
   - economy
@@ -760,6 +760,11 @@ history:
   - ts: 2026-02-22T06:35:16.229Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:55.218Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Add src/__tests__/EssenceManager.test.js: gain/spend/canAfford logic (pure, no Phaser), reject spend below zero, event emission with vi.fn() mocks. Follow CollisionHandlers.test.js pattern.
