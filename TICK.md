@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:47:23.020Z
+updated: 2026-02-23T05:47:23.895Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -849,13 +849,13 @@ history:
 
 ```yaml
 id: TASK-028
-status: backlog
+status: in_progress
 priority: medium
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.259Z
-updated_at: 2026-02-22T06:35:33.259Z
+updated_at: 2026-02-23T05:47:23.895Z
 tags:
   - epic-d
   - tiles
@@ -864,6 +864,11 @@ history:
   - ts: 2026-02-22T06:35:33.259Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:23.895Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Add _silenced flag to EnemyWyvern. When overlapping Silence tile, suppress _shootTimer. Flag cleared each frame if not overlapping. Visual: purple-tinted tile or voidimpact FX overlay. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
