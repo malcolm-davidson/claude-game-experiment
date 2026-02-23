@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:47:23.895Z
+updated: 2026-02-23T05:47:24.771Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -877,13 +877,13 @@ history:
 
 ```yaml
 id: TASK-029
-status: backlog
+status: in_progress
 priority: medium
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.435Z
-updated_at: 2026-02-22T06:35:33.435Z
+updated_at: 2026-02-23T05:47:24.771Z
 tags:
   - epic-d
   - tiles
@@ -892,6 +892,11 @@ history:
   - ts: 2026-02-22T06:35:33.435Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:47:24.771Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Add _weakened flag to EnemyWyvern. When overlapping Weakness tile, takeDamage(amount) deals amount*2. Visual: red-tinted td_world_trap.png. Files: src/entities/EnemyWyvern.js, src/systems/TileManager.js
