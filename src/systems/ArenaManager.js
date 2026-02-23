@@ -49,6 +49,9 @@ export class ArenaManager {
     this._tileTimer    = 0;
     this._tileInterval = 18_000;
 
+    // F-01: market tile spawned once per arena at midpoint
+    this._marketSpawned = false;
+
     // E-01: persistent escape token counters (accumulate across arenas)
     this._escapeTokens     = { melee: 0, ranged: 0, defense: 0 };
     this._toastCooldown    = 0; // ms until next escape toast is allowed
@@ -129,6 +132,7 @@ export class ArenaManager {
       case 'spawning':
         this._updateSpawning(delta);
         this._updateTileSpawn(delta);
+        this._updateMarketSpawn();
         // Transition to warning phase when ~4 s remain in the arena
         if (this._arenaTimer >= ArenaManager.ARENA_DURATION - ArenaManager.WARNING_DURATION) {
           this._setPhase('elite_warning');
@@ -154,6 +158,15 @@ export class ArenaManager {
 
   // ── Private ──────────────────────────────────────────────────────────
 
+  _updateMarketSpawn() {
+    if (this._marketSpawned) return;
+    const midpoint = ArenaManager.ARENA_DURATION / 2;
+    if (this._arenaTimer >= midpoint) {
+      this._marketSpawned = true;
+      if (this.scene.spawnMarketTile) this.scene.spawnMarketTile();
+    }
+  }
+
   _updateTileSpawn(delta) {
     if (!this.scene.tileManager) return;
     this._tileTimer += delta;
@@ -168,6 +181,7 @@ export class ArenaManager {
     this._arenaTimer           = 0;
     this._spawnTimer           = 0;
     this._tileTimer            = 0;
+    this._marketSpawned        = false;
     this._enemiesThisArena     = 0;
     this._spawnInterval        = Math.max(600, 2000 - this.arenaIndex * 150);
     this._maxEnemies           = Math.min(20, 6 + this.arenaIndex * 2);

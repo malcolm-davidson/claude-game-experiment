@@ -1,10 +1,12 @@
 import { Player } from '../entities/Player.js';
 import { EnemyWyvern } from '../entities/EnemyWyvern.js';
+import { MarketTile } from '../entities/MarketTile.js';
 import { ArenaManager } from '../systems/ArenaManager.js';
 import { LootSystem } from '../systems/LootSystem.js';
 import { ZoneManager } from '../systems/ZoneManager.js';
 import { EssenceManager } from '../systems/EssenceManager.js';
 import { TileManager } from '../systems/TileManager.js';
+import { pickMarketItems } from '../data/MarketItems.js';
 import {
   onBulletHitEnemy,
   onEnemyBulletHitPlayer,
@@ -25,10 +27,13 @@ export class GameScene extends Phaser.Scene {
     this._setupBackground();
     this._setupGroups();
     this._setupPlayer();
-    this._setupRegistry();  // A-03: pre-populate all registry keys
+    this._setupRegistry();
     this._setupSystems();
     this._setupCollisions();
     this._setupInput();
+
+    this._marketPanel   = null; // active micro-panel container
+    this._activeMarket  = null; // active MarketTile instance
 
     // Track run stats for the end-of-run summary
     this._runStats = {
@@ -53,7 +58,6 @@ export class GameScene extends Phaser.Scene {
     // Scroll parallax background
     this.bg.tilePositionY -= 0.5;
 
-    // Cull off-screen bullets (snapshot arrays first to avoid mutation-during-iteration)
     cullOffscreenBullets(
       this.playerBullets.getChildren(),
       this.enemyBullets.getChildren(),
@@ -66,10 +70,7 @@ export class GameScene extends Phaser.Scene {
     this.bg = this.add.tileSprite(0, 0, 480, 640, 'background')
       .setOrigin(0, 0);
 
-    // B-02: subtle semi-transparent zone bands (fixed screen-space overlays)
-    // Top zone (y 0–200) — dark red tint, higher danger
-    this.add.rectangle(0, 0, 480, 200, 0x330000, 0.10).setOrigin(0, 0).setDepth(1);
-    // Bottom zone (y 430–640) — blue-grey tint, safer
+    this.add.rectangle(0, 0,   480, 200, 0x330000, 0.10).setOrigin(0, 0).setDepth(1);
     this.add.rectangle(0, 430, 480, 210, 0x001833, 0.10).setOrigin(0, 0).setDepth(1);
   }
 
@@ -78,48 +79,33 @@ export class GameScene extends Phaser.Scene {
     this.enemyBullets  = this.physics.add.group();
     this.enemies       = this.physics.add.group();
     this.lootItems     = this.physics.add.group();
-    this.tacTiles      = this.physics.add.group(); // tactical tiles (D-01)
+    this.tacTiles      = this.physics.add.group();
+    this.marketTiles   = this.physics.add.group(); // F-01
   }
 
   _setupPlayer() {
     this.player = new Player(this, 240, 520);
   }
 
-  /** A-03: Pre-populate all registry keys so UIScene can read safely. */
   _setupRegistry() {
-    // Combat basics
     this.registry.set('score', 0);
     this.registry.set('hp',    this.player.stats.hp);
     this.registry.set('maxHp', this.player.stats.maxHp);
-
-    // Arena progression
     this.registry.set('arenaIndex', 0);
     this.registry.set('arenaPhase', 'spawning');
-
-    // Dash charges
     this.registry.set('dashCharges',    2);
     this.registry.set('maxDashCharges', 2);
-
-    // In-run essence (all start at 0)
     this.registry.set('essence_black',  0);
     this.registry.set('essence_purple', 0);
     this.registry.set('essence_red',    0);
     this.registry.set('essence_green',  0);
 
-    // Persistent devotion (load from localStorage, default 0)
-    const devotionDefaults = { black: 0, purple: 0, red: 0, green: 0 };
-    const storedDevotion   = this._loadDevotion();
-    for (const color of Object.keys(devotionDefaults)) {
-      this.registry.set(
-        `devotion_${color}`,
-        storedDevotion[color] ?? devotionDefaults[color],
-      );
+    const storedDevotion = this._loadDevotion();
+    for (const color of ['black', 'purple', 'red', 'green']) {
+      this.registry.set(`devotion_${color}`, storedDevotion[color] ?? 0);
     }
 
-    // Market tile active state
     this.registry.set('marketTileActive', false);
-
-    // Current player zone (updated each frame)
     this.registry.set('playerZone', 'bottom');
   }
 
@@ -129,7 +115,6 @@ export class GameScene extends Phaser.Scene {
     this.arenaManager   = new ArenaManager(this);
     this.lootSystem     = new LootSystem(this);
 
-    // Track essence earned per colour for the run-end stats payload
     this.events.on('essence-gained', ({ color, amount }) => {
       if (this._runStats?.essenceEarned) {
         this._runStats.essenceEarned[color] = (this._runStats.essenceEarned[color] ?? 0) + amount;
@@ -143,52 +128,40 @@ export class GameScene extends Phaser.Scene {
   }
 
   _setupCollisions() {
-    // Player bullets hit enemies
     this.physics.add.overlap(
-      this.playerBullets,
-      this.enemies,
+      this.playerBullets, this.enemies,
       (bullet, enemySprite) =>
         onBulletHitEnemy(bullet, enemySprite, this.player.stats.attack),
     );
-
-    // Enemy bullets hit player
     this.physics.add.overlap(
-      this.enemyBullets,
-      this.player.sprite,
+      this.enemyBullets, this.player.sprite,
       (playerSprite, bullet) =>
         onEnemyBulletHitPlayer(playerSprite, bullet, this.player),
     );
-
-    // Player collects loot
     this.physics.add.overlap(
-      this.player.sprite,
-      this.lootItems,
+      this.player.sprite, this.lootItems,
       (playerSprite, loot) =>
         onPlayerCollectLoot(playerSprite, loot, this.lootSystem),
     );
-
-    // Tactical tile effects on enemies (D-02 through D-05)
     this.physics.add.overlap(
-      this.tacTiles,
-      this.enemies,
+      this.tacTiles, this.enemies,
       (tileSprite, enemySprite) => {
         const type   = tileSprite.getData('tileType');
         const entity = enemySprite.getData('entity');
         if (!entity) return;
+        if (type === 'pit')      entity.takeDamage(Math.max(entity.hp, 1));
+        else if (type === 'silence')  entity._silenced = true;
+        else if (type === 'weakness') entity._weakened = true;
+        else if (type === 'slow')     entity._slowed   = true;
+      },
+    );
 
-        if (type === 'pit') {
-          // D-02: instant kill — takeDamage(hp) so even armoured enemies die
-          entity.takeDamage(Math.max(entity.hp, 1));
-        } else if (type === 'silence') {
-          // D-03: flag set; EnemyWyvern._update suppresses shooting
-          entity._silenced = true;
-        } else if (type === 'weakness') {
-          // D-04: flag set; EnemyWyvern.takeDamage doubles damage
-          entity._weakened = true;
-        } else if (type === 'slow') {
-          // D-05: flag set; EnemyWyvern._update halves velocity
-          entity._slowed = true;
-        }
+    // F-03: player enters market tile range → open panel
+    this.physics.add.overlap(
+      this.player.sprite, this.marketTiles,
+      (playerSprite, tileSprite) => {
+        const mt = tileSprite.getData('marketTile');
+        if (mt && !this._marketPanel) this._openMarketPanel(mt);
       },
     );
   }
@@ -197,18 +170,15 @@ export class GameScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.fireKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
 
-    // ── Touch / pointer controls ──────────────────────────────────────
     this.input.on('pointerdown', (pointer) => {
       this.player.setTouchTarget(pointer.x, pointer.y);
       this._showTouchRing(pointer.x, pointer.y);
     });
-
     this.input.on('pointermove', (pointer) => {
       if (!pointer.isDown) return;
       this.player.setTouchTarget(pointer.x, pointer.y);
       this._moveTouchRing(pointer.x, pointer.y);
     });
-
     const onTouchEnd = () => {
       this.player.clearTouchTarget();
       this._hideTouchRing();
@@ -221,52 +191,142 @@ export class GameScene extends Phaser.Scene {
     this._touchRing.strokeCircle(0, 0, 22);
   }
 
-  _showTouchRing(x, y) {
-    this._touchRing.setPosition(x, y).setAlpha(0.9);
-  }
+  _showTouchRing(x, y) { this._touchRing.setPosition(x, y).setAlpha(0.9); }
+  _moveTouchRing(x, y) { this._touchRing.setPosition(x, y); }
+  _hideTouchRing()      { this._touchRing.setAlpha(0); }
 
-  _moveTouchRing(x, y) {
-    this._touchRing.setPosition(x, y);
-  }
+  isMobile() { return !this.sys.game.device.os.desktop; }
 
-  _hideTouchRing() {
-    this._touchRing.setAlpha(0);
-  }
-
-  /** Returns true when the primary input is touch (iOS / Android). */
-  isMobile() {
-    return !this.sys.game.device.os.desktop;
-  }
-
-  // ── Public helpers called by entities/systems ────────────────────────
+  // ── Public helpers ───────────────────────────────────────────────────
 
   addScore(points) {
-    const current = this.registry.get('score');
-    this.registry.set('score', current + points);
+    this.registry.set('score', this.registry.get('score') + points);
   }
 
   spawnEnemy(x, y, type = 'griffin', zoneBonus = {}) {
     new EnemyWyvern(this, x, y, type, zoneBonus);
   }
 
-  /**
-   * A-04: Run-end flow.
-   * Stops all systems, persists devotion, emits 'run-end', navigates to
-   * SummaryScene. Called by Player.takeDamage() when HP reaches 0.
-   */
-  gameOver() {
-    this._runEnd();
+  /** F-01: Spawn a market tile (called by ArenaManager at arena midpoint). */
+  spawnMarketTile() {
+    if (this._activeMarket?.active) return; // only one at a time
+    const x  = Phaser.Math.Between(80, 400);
+    const mt = new MarketTile(this, x, -64);
+    this._activeMarket = mt;
   }
 
-  // ── Private ──────────────────────────────────────────────────────────
+  gameOver() { this._runEnd(); }
+
+  // ── Market micro-panel (F-03) ────────────────────────────────────────
+
+  _openMarketPanel(marketTile) {
+    if (this._marketPanel) return;
+    marketTile.openPanel();
+
+    // Soft slowdown
+    this.physics.world.timeScale = 3.5; // slows physics (higher = slower)
+    this.time.timeScale           = 0.3;
+
+    const items = pickMarketItems(marketTile.tier, 3);
+    const px    = Phaser.Math.Clamp(marketTile.x, 90, 390);
+    const py    = Phaser.Math.Clamp(marketTile.y + 60, 60, 480);
+
+    // Panel background
+    const panel = this.add.container(px, py).setDepth(50);
+    const bg    = this.add.rectangle(0, 0, 170, 30 + items.length * 52, 0x1a0a00, 0.95)
+      .setStrokeStyle(1, 0xf8db8d, 0.8);
+    panel.add(bg);
+
+    // Title
+    panel.add(this.add.text(0, -(items.length * 26 + 4), 'MARKET', {
+      fontSize: '11px', color: '#f8db8d', fontStyle: 'bold',
+    }).setOrigin(0.5));
+
+    const ESSENCE_COLORS = { black: '#888888', purple: '#aa66ff', red: '#ff5555', green: '#44dd88' };
+
+    items.forEach((item, i) => {
+      const iy = -(items.length - 1) * 26 + i * 52;
+
+      // Item label
+      panel.add(this.add.text(-76, iy - 14, item.label, {
+        fontSize: '10px', color: '#ffffff', fontStyle: 'bold',
+      }).setOrigin(0, 0.5));
+
+      // Effect
+      panel.add(this.add.text(-76, iy - 2, item.effect, {
+        fontSize: '9px', color: '#aaaaaa',
+      }).setOrigin(0, 0.5));
+
+      // Cost
+      const costStr = Object.entries(item.cost)
+        .map(([c, n]) => `${n}${c[0].toUpperCase()}`)
+        .join(' ');
+      const canAfford = this.essenceManager.canAfford(item.cost);
+      panel.add(this.add.text(-76, iy + 10, costStr, {
+        fontSize: '9px',
+        color: canAfford ? '#f8db8d' : '#666666',
+      }).setOrigin(0, 0.5));
+
+      // Buy button
+      const btnBg = this.add.rectangle(62, iy, 44, 18,
+        canAfford ? 0x2a5a00 : 0x333333, 1)
+        .setStrokeStyle(1, canAfford ? 0x88ff44 : 0x555555);
+      const btnTxt = this.add.text(62, iy, canAfford ? 'BUY' : '—', {
+        fontSize: '10px', color: canAfford ? '#88ff44' : '#555555', fontStyle: 'bold',
+      }).setOrigin(0.5);
+      panel.add([btnBg, btnTxt]);
+
+      if (canAfford) {
+        btnBg.setInteractive({ useHandCursor: true });
+        btnBg.on('pointerdown', () => {
+          // Spend essence
+          for (const [color, amt] of Object.entries(item.cost)) {
+            this.essenceManager.spend(color, amt);
+          }
+          item.applyFn(this);
+          this.addScore(100);
+          this._closeMarketPanel(marketTile);
+        });
+      }
+    });
+
+    // Close button
+    const closeBtn = this.add.text(72, -(items.length * 26 + 4), '✕', {
+      fontSize: '11px', color: '#ff6666',
+    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
+    closeBtn.on('pointerdown', () => this._closeMarketPanel(marketTile));
+    panel.add(closeBtn);
+
+    // ESC key closes
+    this._marketEscKey = this.input.keyboard.once('keydown-ESC', () =>
+      this._closeMarketPanel(marketTile));
+
+    this._marketPanel = panel;
+  }
+
+  _closeMarketPanel(marketTile) {
+    if (!this._marketPanel) return;
+    this._marketPanel.destroy();
+    this._marketPanel = null;
+    marketTile.closePanel();
+
+    this.physics.world.timeScale = 1;
+    this.time.timeScale           = 1;
+
+    if (this._marketEscKey) {
+      this.input.keyboard.removeListener('keydown-ESC', this._marketEscKey);
+      this._marketEscKey = null;
+    }
+  }
+
+  // ── Run-end flow ─────────────────────────────────────────────────────
 
   _runEnd() {
-    // Stop systems
     this.arenaManager.stop();
     this.physics.pause();
+    if (this._marketPanel) this._closeMarketPanel(this._activeMarket);
     this.scene.stop('UI');
 
-    // Build stats payload
     const arenaIndex = this.registry.get('arenaIndex') ?? 0;
     const score      = this.registry.get('score') ?? 0;
     const stats = {
@@ -277,13 +337,9 @@ export class GameScene extends Phaser.Scene {
       essenceSpent:  { ...this._runStats.essenceSpent },
     };
 
-    // Persist devotion gained this run to localStorage
     this._saveDevotion();
-
-    // Emit run-end event (SummaryScene and other systems can listen)
     this.events.emit('run-end', stats);
 
-    // Navigate to summary (stub scene — will be created in Epic C/D)
     if (this.scene.get('Summary')) {
       this.scene.start('Summary', stats);
     } else {
@@ -291,69 +347,43 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
-  /** Fallback shown when SummaryScene doesn't exist yet. */
   _showFallbackGameOver(stats) {
     this.add.text(240, 240, 'THE DRAGON FALLS', {
-      fontSize: '28px',
-      color: '#cc3300',
-      fontStyle: 'bold',
-      align: 'center',
+      fontSize: '28px', color: '#cc3300', fontStyle: 'bold', align: 'center',
     }).setOrigin(0.5);
-
     this.add.text(240, 285, `Score: ${stats.score}  |  Arenas: ${stats.arenasCompleted}`, {
-      fontSize: '15px',
-      color: '#e8c87a',
-      align: 'center',
+      fontSize: '15px', color: '#e8c87a', align: 'center',
     }).setOrigin(0.5);
-
-    const restartHint = this.isMobile() ? 'Tap to restart' : 'Press R to restart';
-    this.add.text(240, 340, restartHint, {
-      fontSize: '16px',
-      color: '#aaaaaa',
-      align: 'center',
-    }).setOrigin(0.5);
-
-    const doRestart = () => {
-      this._resetRegistry();
-      this.scene.restart();
-      this.scene.launch('UI');
-    };
+    const hint = this.isMobile() ? 'Tap to restart' : 'Press R to restart';
+    this.add.text(240, 340, hint, { fontSize: '16px', color: '#aaaaaa' }).setOrigin(0.5);
+    const doRestart = () => { this._resetRegistry(); this.scene.restart(); this.scene.launch('UI'); };
     this.input.keyboard.once('keydown-R', doRestart);
     this.input.once('pointerup', doRestart);
   }
 
-  /** A-04: Reset all A-03 registry keys on restart. */
   _resetRegistry() {
-    this.registry.set('score',           0);
-    this.registry.set('arenaIndex',      0);
-    this.registry.set('arenaPhase',      'spawning');
-    this.registry.set('dashCharges',     2);
-    this.registry.set('maxDashCharges',  2);
-    this.registry.set('essence_black',   0);
-    this.registry.set('essence_purple',  0);
-    this.registry.set('essence_red',     0);
-    this.registry.set('essence_green',   0);
+    this.registry.set('score', 0);
+    this.registry.set('arenaIndex', 0);
+    this.registry.set('arenaPhase', 'spawning');
+    this.registry.set('dashCharges', 2);
+    this.registry.set('maxDashCharges', 2);
+    this.registry.set('essence_black', 0);
+    this.registry.set('essence_purple', 0);
+    this.registry.set('essence_red', 0);
+    this.registry.set('essence_green', 0);
     this.registry.set('marketTileActive', false);
-    // Note: devotion_* keys are NOT reset — they are persistent.
   }
 
   _loadDevotion() {
-    try {
-      return JSON.parse(localStorage.getItem('devotion') ?? '{}');
-    } catch {
-      return {};
-    }
+    try { return JSON.parse(localStorage.getItem('devotion') ?? '{}'); }
+    catch { return {}; }
   }
 
   _saveDevotion() {
-    const devotion = {};
-    for (const color of ['black', 'purple', 'red', 'green']) {
-      devotion[color] = this.registry.get(`devotion_${color}`) ?? 0;
+    const d = {};
+    for (const c of ['black', 'purple', 'red', 'green']) {
+      d[c] = this.registry.get(`devotion_${c}`) ?? 0;
     }
-    try {
-      localStorage.setItem('devotion', JSON.stringify(devotion));
-    } catch {
-      // localStorage unavailable (e.g. private browsing with quota 0)
-    }
+    try { localStorage.setItem('devotion', JSON.stringify(d)); } catch {}
   }
 }
