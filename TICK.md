@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:40:51.934Z
+updated: 2026-02-23T05:40:52.963Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -689,13 +689,13 @@ history:
 
 ```yaml
 id: TASK-023
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:15.870Z
-updated_at: 2026-02-22T06:35:15.870Z
+updated_at: 2026-02-23T05:40:52.963Z
 tags:
   - epic-c
   - economy
@@ -704,6 +704,11 @@ history:
   - ts: 2026-02-22T06:35:15.870Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:52.963Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Extend LootSystem.tryDrop() to drop coloured essence orbs. Type-to-colour affinity: bat=purple, griffin=red, moth=green, demon=black, dragon=black+red mix. Use gem sprites (gem_amethyst, gem_ruby, gem_jade, skull) from td_items. Overlap-to-collect calls essenceManager.gain(color, 1, 'kill'). Supersedes TASK-010.
