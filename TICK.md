@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:56:04.686Z
+updated: 2026-02-23T05:57:57.040Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1024,13 +1024,13 @@ history:
 
 ```yaml
 id: TASK-033
-status: backlog
+status: in_progress
 priority: high
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:57.846Z
-updated_at: 2026-02-22T06:35:57.846Z
+updated_at: 2026-02-23T05:57:57.040Z
 tags:
   - epic-f
   - market
@@ -1039,6 +1039,11 @@ history:
   - ts: 2026-02-22T06:35:57.846Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:57.040Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Create src/entities/MarketTile.js: world-space tile with despawn timer (~15s), timer ring visual, zone determines item tier. Writes marketTileActive, marketTileX/Y, marketTileTier, marketTileTimeRemaining to registry. ArenaManager spawns one per arena at midpoint.
