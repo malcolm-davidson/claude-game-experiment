@@ -159,8 +159,13 @@ export class EnemyWyvern {
       }
     }
 
-    // Despawn if off bottom
-    if (this.sprite.y > 700) this.sprite.destroy();
+    // Despawn if off bottom — record escape for wave-memory (E-01)
+    if (this.sprite.y > 700) {
+      if (this.scene.arenaManager) {
+        this.scene.arenaManager.recordEscape(this._type);
+      }
+      this.sprite.destroy();
+    }
   }
 
   _shoot() {

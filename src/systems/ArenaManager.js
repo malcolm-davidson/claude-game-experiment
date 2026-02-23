@@ -21,6 +21,18 @@ export class ArenaManager {
   // How long the transitioning phase lasts (ms)
   static TRANSITION_DURATION = 3_000;
 
+  // E-01: type → escape category
+  static ESCAPE_CATEGORY = {
+    bat:     'melee',
+    griffin: 'melee',
+    dragon:  'melee',
+    moth:    'ranged',
+    demon:   'ranged',
+  };
+
+  // E-02: max extra weight added per category
+  static TOKEN_CAP = 5;
+
   constructor(scene) {
     this.scene = scene;
 
@@ -37,19 +49,47 @@ export class ArenaManager {
     this._tileTimer    = 0;
     this._tileInterval = 18_000;
 
+    // E-01: persistent escape token counters (accumulate across arenas)
+    this._escapeTokens     = { melee: 0, ranged: 0, defense: 0 };
+    this._toastCooldown    = 0; // ms until next escape toast is allowed
+
     this._running = true;
 
     this._beginArena();
   }
 
-  /** Enemy types available per arena tier. Earlier entries = more common. */
+  /**
+   * E-02: Enemy pool weighted by arena tier and escape tokens.
+   * Each escape token for a category adds +1 copy of a matching type
+   * to the pool (capped at TOKEN_CAP extra entries per category).
+   */
   _poolForArena() {
     const a = this.arenaIndex;
-    if (a <= 1) return ['griffin', 'bat', 'bat'];
-    if (a <= 3) return ['griffin', 'griffin', 'bat', 'moth'];
-    if (a <= 5) return ['griffin', 'moth', 'moth', 'demon'];
-    if (a <= 7) return ['moth', 'demon', 'demon', 'dragon'];
-    return ['demon', 'demon', 'dragon', 'dragon'];
+    let base;
+    if (a <= 1) base = ['griffin', 'bat', 'bat'];
+    else if (a <= 3) base = ['griffin', 'griffin', 'bat', 'moth'];
+    else if (a <= 5) base = ['griffin', 'moth', 'moth', 'demon'];
+    else if (a <= 7) base = ['moth', 'demon', 'demon', 'dragon'];
+    else base = ['demon', 'demon', 'dragon', 'dragon'];
+
+    const pool = [...base];
+
+    // Add extra entries proportional to escape tokens
+    const meleeBonus  = this._escapeTokens.melee  ?? 0;
+    const rangedBonus = this._escapeTokens.ranged  ?? 0;
+
+    // Melee representatives available in this tier
+    const meleeTypes  = base.filter(t => ArenaManager.ESCAPE_CATEGORY[t] === 'melee');
+    const rangedTypes = base.filter(t => ArenaManager.ESCAPE_CATEGORY[t] === 'ranged');
+
+    // Fall back to tier-appropriate defaults if category not in base yet
+    const meleeRep  = meleeTypes.length  ? meleeTypes[0]  : 'griffin';
+    const rangedRep = rangedTypes.length ? rangedTypes[0] : 'moth';
+
+    for (let i = 0; i < meleeBonus;  i++) pool.push(meleeRep);
+    for (let i = 0; i < rangedBonus; i++) pool.push(rangedRep);
+
+    return pool;
   }
 
   /** Stop all activity (call before run-end). */
@@ -57,10 +97,33 @@ export class ArenaManager {
     this._running = false;
   }
 
+  /**
+   * E-01: Called by EnemyWyvern when it scrolls off the bottom.
+   * Increments the escape token for the enemy's category.
+   * @param {string} type  enemy type string (e.g. 'griffin', 'moth')
+   */
+  recordEscape(type) {
+    const category = ArenaManager.ESCAPE_CATEGORY[type] ?? 'melee';
+    this._escapeTokens[category] = Math.min(
+      (this._escapeTokens[category] ?? 0) + 1,
+      ArenaManager.TOKEN_CAP,
+    );
+
+    this.scene.events.emit('arena-escape-penalty', { type, category });
+
+    // Toast — debounced so rapid escapes don't flood the screen
+    if (this._toastCooldown <= 0) {
+      const total = Object.values(this._escapeTokens).reduce((a, b) => a + b, 0);
+      this._showEscapeToast(`${total} escaped — more incoming!`);
+      this._toastCooldown = 3000;
+    }
+  }
+
   update(time, delta) {
     if (!this._running) return;
 
-    this._arenaTimer += delta;
+    this._arenaTimer    += delta;
+    this._toastCooldown -= delta;
 
     switch (this.phase) {
       case 'spawning':
@@ -166,6 +229,25 @@ export class ArenaManager {
       return { speedMult: 1.0, essenceDropBonus: 0,   lootBonus: 0.4 };
     }
     return { speedMult: 1.0, essenceDropBonus: 0, lootBonus: 0 };
+  }
+
+  _showEscapeToast(message) {
+    const txt = this.scene.add.text(240, 120, message, {
+      fontSize: '13px',
+      color: '#ff8844',
+      fontStyle: 'bold',
+      backgroundColor: '#1a0000',
+      padding: { x: 8, y: 4 },
+    }).setOrigin(0.5).setDepth(21).setAlpha(0.9);
+
+    this.scene.tweens.add({
+      targets: txt,
+      alpha: 0,
+      y: txt.y - 24,
+      duration: 2000,
+      ease: 'Power1',
+      onComplete: () => txt.destroy(),
+    });
   }
 
   _showAnnouncement(message) {

@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:49:19.424Z
+updated: 2026-02-23T05:56:04.686Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -958,13 +958,13 @@ history:
 
 ```yaml
 id: TASK-031
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:43.171Z
-updated_at: 2026-02-22T06:35:43.171Z
+updated_at: 2026-02-23T05:56:03.768Z
 tags:
   - epic-e
   - wave-memory
@@ -973,6 +973,16 @@ history:
   - ts: 2026-02-22T06:35:43.171Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:54:54.975Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:56:03.768Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Replace silent y>700 destroy in EnemyWyvern with arenaManager.recordEscape(type). ArenaManager maintains _escapeTokens = {melee, ranged, defense}. Type-to-category: bat/griffin/dragon=melee, moth/demon=ranged. Tokens accumulate within a run. Supersedes TASK-012. Files: src/entities/EnemyWyvern.js, src/systems/ArenaManager.js
@@ -981,13 +991,13 @@ history:
 
 ```yaml
 id: TASK-032
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:43.346Z
-updated_at: 2026-02-22T06:35:43.346Z
+updated_at: 2026-02-23T05:56:04.686Z
 tags:
   - epic-e
   - wave-memory
@@ -996,6 +1006,16 @@ history:
   - ts: 2026-02-22T06:35:43.346Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:54:55.887Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:56:04.686Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Update ArenaManager _poolForArena() to weight enemy type selection by escape tokens (+1 weight per token per category, cap +5). Emit arena-escape-penalty event. Brief screen toast 'X escaped — more incoming!' using existing wave-announcement tween pattern. File: src/systems/ArenaManager.js
