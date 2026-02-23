@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:57:58.809Z
+updated: 2026-02-23T05:57:59.756Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1108,13 +1108,13 @@ history:
 
 ```yaml
 id: TASK-036
-status: backlog
+status: in_progress
 priority: medium
 assigned_to: null
-claimed_by: null
+claimed_by: "@claude-code"
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:58.382Z
-updated_at: 2026-02-22T06:35:58.382Z
+updated_at: 2026-02-23T05:57:59.756Z
 tags:
   - epic-f
   - market
@@ -1123,6 +1123,11 @@ history:
   - ts: 2026-02-22T06:35:58.382Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:57:59.756Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
 ```
 
 > Unit tests for MarketItems data file (tier filtering, cost structure) and affordability check path. No Phaser dependency. File: src/__tests__/MarketItems.test.js
