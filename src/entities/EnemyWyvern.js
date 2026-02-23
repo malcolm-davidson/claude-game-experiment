@@ -75,6 +75,7 @@ export class EnemyWyvern {
     this.scene = scene;
     const cfg = ENEMY_TYPES[type] ?? ENEMY_TYPES.griffin;
     this._cfg = cfg;
+    this._type = type;
     this._zoneBonus = zoneBonus;
 
     this.hp = cfg.hp;
@@ -170,7 +171,7 @@ export class EnemyWyvern {
       depth: 15,
     });
 
-    scene.lootSystem.tryDrop(sprite.x, sprite.y);
+    scene.lootSystem.tryDrop(sprite.x, sprite.y, this._type, this._zoneBonus);
 
     sprite.destroy();
   }

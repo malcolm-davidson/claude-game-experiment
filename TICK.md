@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:32:57.324Z
+updated: 2026-02-23T05:42:49.389Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -661,13 +661,13 @@ history:
 
 ```yaml
 id: TASK-022
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:15.698Z
-updated_at: 2026-02-22T06:35:15.698Z
+updated_at: 2026-02-23T05:42:46.776Z
 tags:
   - epic-c
   - economy
@@ -676,6 +676,16 @@ history:
   - ts: 2026-02-22T06:35:15.698Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:51.934Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:42:46.776Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/EssenceManager.js: gain(color, amount, source), spend(color, amount), canAfford(costs), getAll(). Emits essence-gained/essence-spent events via scene.events. Writes registry keys from A-03. source param used by DevotionManager (H-01).
@@ -684,13 +694,13 @@ history:
 
 ```yaml
 id: TASK-023
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:15.870Z
-updated_at: 2026-02-22T06:35:15.870Z
+updated_at: 2026-02-23T05:42:47.605Z
 tags:
   - epic-c
   - economy
@@ -699,6 +709,16 @@ history:
   - ts: 2026-02-22T06:35:15.870Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:52.963Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:42:47.605Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Extend LootSystem.tryDrop() to drop coloured essence orbs. Type-to-colour affinity: bat=purple, griffin=red, moth=green, demon=black, dragon=black+red mix. Use gem sprites (gem_amethyst, gem_ruby, gem_jade, skull) from td_items. Overlap-to-collect calls essenceManager.gain(color, 1, 'kill'). Supersedes TASK-010.
@@ -707,13 +727,13 @@ history:
 
 ```yaml
 id: TASK-024
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:16.052Z
-updated_at: 2026-02-22T06:35:16.052Z
+updated_at: 2026-02-23T05:42:48.472Z
 tags:
   - epic-c
   - economy
@@ -722,6 +742,16 @@ history:
   - ts: 2026-02-22T06:35:16.052Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:54.153Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:42:48.472Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add 4-icon row to UIScene (bottom or right side). Each slot: gem icon + count text. Pulse tween on gain (scale 1→1.3→1, 200ms). Dim/highlight affordability based on marketTileActive/ritualActive registry. Accessibility: letter label (B/P/R/G) per colour slot. File: src/scenes/UIScene.js
@@ -730,13 +760,13 @@ history:
 
 ```yaml
 id: TASK-025
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:16.229Z
-updated_at: 2026-02-22T06:35:16.229Z
+updated_at: 2026-02-23T05:42:49.389Z
 tags:
   - epic-c
   - economy
@@ -745,6 +775,16 @@ history:
   - ts: 2026-02-22T06:35:16.229Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T05:40:55.218Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T05:42:49.389Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Add src/__tests__/EssenceManager.test.js: gain/spend/canAfford logic (pure, no Phaser), reject spend below zero, event emission with vi.fn() mocks. Follow CollisionHandlers.test.js pattern.

@@ -2,6 +2,14 @@
  * UIScene — HUD overlay that reads from the registry.
  * Runs in parallel with GameScene.
  */
+
+const ESSENCE_SLOTS = [
+  { color: 'black',  label: 'B', tint: 0x888888 },
+  { color: 'purple', label: 'P', tint: 0xaa66ff },
+  { color: 'red',    label: 'R', tint: 0xff5555 },
+  { color: 'green',  label: 'G', tint: 0x44dd88 },
+];
+
 export class UIScene extends Phaser.Scene {
   constructor() {
     super('UI');
@@ -15,8 +23,8 @@ export class UIScene extends Phaser.Scene {
       fontStyle: 'bold',
     });
 
-    // Wave
-    this.waveText = this.add.text(240, 10, 'WAVE 1', {
+    // Arena index
+    this.arenaText = this.add.text(240, 10, 'ARENA 1', {
       fontSize: '14px',
       color: '#cc8833',
       fontStyle: 'bold',
@@ -36,16 +44,10 @@ export class UIScene extends Phaser.Scene {
 
     this.githubButton
       .on('pointerover', () => {
-        this.githubButton.setStyle({
-          color: '#fff5d6',
-          backgroundColor: '#4a2a18',
-        });
+        this.githubButton.setStyle({ color: '#fff5d6', backgroundColor: '#4a2a18' });
       })
       .on('pointerout', () => {
-        this.githubButton.setStyle({
-          color: '#f8db8d',
-          backgroundColor: '#2a1a12',
-        });
+        this.githubButton.setStyle({ color: '#f8db8d', backgroundColor: '#2a1a12' });
         this.githubButton.setScale(1);
       })
       .on('pointerdown', () => {
@@ -61,6 +63,37 @@ export class UIScene extends Phaser.Scene {
     this.hpBarBg = this.add.rectangle(35, 624, 120, 10, 0x330000).setOrigin(0, 0.5);
     this.hpBar   = this.add.rectangle(35, 624, 120, 10, 0xcc2222).setOrigin(0, 0.5);
 
+    // C-03: 4-colour Essence HUD row (bottom-right, alongside HP bar)
+    this._essenceSlots = {};
+    const slotStartX = 168;
+    const slotGap    = 76;
+
+    ESSENCE_SLOTS.forEach(({ color, label, tint }, i) => {
+      const x = slotStartX + i * slotGap;
+
+      // Gem icon
+      const icon = this.add.image(x, 618, `essence_${color}`)
+        .setDisplaySize(20, 20)
+        .setDepth(10)
+        .setTint(tint);
+
+      // Accessibility letter label (always visible, color-independent)
+      const letterText = this.add.text(x + 13, 610, label, {
+        fontSize: '10px',
+        color: '#' + tint.toString(16).padStart(6, '0'),
+        fontStyle: 'bold',
+      }).setOrigin(0, 0.5).setDepth(10);
+
+      // Count
+      const countText = this.add.text(x + 13, 624, '0', {
+        fontSize: '12px',
+        color: '#ffffff',
+        fontStyle: 'bold',
+      }).setOrigin(0, 0.5).setDepth(10);
+
+      this._essenceSlots[color] = { icon, letterText, countText };
+    });
+
     // Listen for registry changes
     this.registry.events.on('changedata', this._onRegistryChange, this);
   }
@@ -68,13 +101,32 @@ export class UIScene extends Phaser.Scene {
   _onRegistryChange(parent, key, value) {
     if (key === 'score') {
       this.scoreText.setText(`SCORE: ${value}`);
-    } else if (key === 'wave') {
-      this.waveText.setText(`WAVE ${value}`);
+
+    } else if (key === 'arenaIndex') {
+      this.arenaText.setText(`ARENA ${value + 1}`);
+
     } else if (key === 'hp' || key === 'maxHp') {
       const hp    = this.registry.get('hp');
       const maxHp = this.registry.get('maxHp');
       const ratio = Math.max(0, hp / maxHp);
       this.hpBar.setDisplaySize(120 * ratio, 10);
+
+    } else if (key.startsWith('essence_')) {
+      const color = key.slice('essence_'.length);
+      const slot  = this._essenceSlots[color];
+      if (!slot) return;
+
+      slot.countText.setText(String(value));
+
+      // Pulse tween on gain (scale 1 → 1.3 → 1, 200ms)
+      this.tweens.add({
+        targets: [slot.icon, slot.countText],
+        scaleX: 1.3,
+        scaleY: 1.3,
+        duration: 100,
+        yoyo: true,
+        ease: 'Power1',
+      });
     }
   }
 }
