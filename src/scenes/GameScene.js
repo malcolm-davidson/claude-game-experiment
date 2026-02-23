@@ -115,6 +115,11 @@ export class GameScene extends Phaser.Scene {
     this.arenaManager   = new ArenaManager(this);
     this.lootSystem     = new LootSystem(this);
 
+    // G-03: launch ritual overlay at arena-end
+    this.events.on('arena-end', () => {
+      this.scene.launch('Ritual', { threadCount: 3 });
+    });
+
     this.events.on('essence-gained', ({ color, amount }) => {
       if (this._runStats?.essenceEarned) {
         this._runStats.essenceEarned[color] = (this._runStats.essenceEarned[color] ?? 0) + amount;

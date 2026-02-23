@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T06:01:03.460Z
+updated: 2026-02-23T06:05:56.705Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -1156,13 +1156,13 @@ history:
 
 ```yaml
 id: TASK-037
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:18.912Z
-updated_at: 2026-02-22T06:36:18.912Z
+updated_at: 2026-02-23T06:05:53.896Z
 tags:
   - epic-g
   - ritual
@@ -1171,6 +1171,16 @@ history:
   - ts: 2026-02-22T06:36:18.912Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:17.407Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:05:53.896Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/systems/RitualManager.js (pure logic, no Phaser). State machine: idle→revealing→waiting_input→result→done. Generates colour sigil sequence (5-8 steps). Methods: startRitual(threadCount), match(color), skip(), bank(). Computes Depth (match count) + Resonance (colour pattern score, consecutive same=bonus). Takes callback/event bus. Supersedes TASK-009.
@@ -1179,13 +1189,13 @@ history:
 
 ```yaml
 id: TASK-038
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.096Z
-updated_at: 2026-02-22T06:36:19.096Z
+updated_at: 2026-02-23T06:05:54.792Z
 tags:
   - epic-g
   - ritual
@@ -1194,6 +1204,16 @@ history:
   - ts: 2026-02-22T06:36:19.096Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:18.364Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:05:54.792Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/data/RitualRewards.js: maps (depth, resonance) to reward definitions. Low=minor stat bumps via player.applyUpgrade(), high=compound effects ('all essence gain +1 for rest of run'), very high=rare placeholder slots. File: src/data/RitualRewards.js
@@ -1202,13 +1222,13 @@ history:
 
 ```yaml
 id: TASK-039
-status: backlog
+status: done
 priority: high
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.274Z
-updated_at: 2026-02-22T06:36:19.274Z
+updated_at: 2026-02-23T06:05:55.666Z
 tags:
   - epic-g
   - ritual
@@ -1217,6 +1237,16 @@ history:
   - ts: 2026-02-22T06:36:19.274Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:19.278Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:05:55.666Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Create src/scenes/RitualScene.js — launches over GameScene at arena-end event. Shows: current sigil (large + colour icon), sequence history (row of small icons), Thread count, Depth, Resonance bar, available Essence. Input: 4 colour Match buttons + Skip + Bank. Preview consequences before input. Applies RitualManager outcome on completion, resumes game.
@@ -1225,13 +1255,13 @@ history:
 
 ```yaml
 id: TASK-040
-status: backlog
+status: done
 priority: medium
 assigned_to: null
 claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:36:19.455Z
-updated_at: 2026-02-22T06:36:19.455Z
+updated_at: 2026-02-23T06:05:56.705Z
 tags:
   - epic-g
   - ritual
@@ -1240,6 +1270,16 @@ history:
   - ts: 2026-02-22T06:36:19.455Z
     who: "@malcolm-davidson"
     action: created
+  - ts: 2026-02-23T06:03:20.214Z
+    who: "@claude-code"
+    action: claimed
+    from: backlog
+    to: in_progress
+  - ts: 2026-02-23T06:05:56.705Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > Tests for src/systems/RitualManager.js: Depth counting on match/skip sequences, Resonance increases with colour runs, Thread depletion ends ritual, Bank returns current state. File: src/__tests__/RitualManager.test.js
