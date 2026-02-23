@@ -2,7 +2,7 @@
 project: drakenrider
 schema_version: "1.0"
 created: Fri Feb 20 2026 13:17:40 GMT-0800 (Pacific Standard Time)
-updated: 2026-02-23T05:49:15.646Z
+updated: 2026-02-23T05:49:16.605Z
 default_workflow: [backlog, todo, in_progress, review, done]
 id_prefix: TASK
 next_id: 52
@@ -826,13 +826,13 @@ history:
 
 ```yaml
 id: TASK-027
-status: in_progress
+status: done
 priority: high
 assigned_to: null
-claimed_by: "@claude-code"
+claimed_by: null
 created_by: "@malcolm-davidson"
 created_at: 2026-02-22T06:35:33.084Z
-updated_at: 2026-02-23T05:47:23.020Z
+updated_at: 2026-02-23T05:49:16.605Z
 tags:
   - epic-d
   - tiles
@@ -846,6 +846,11 @@ history:
     action: claimed
     from: backlog
     to: in_progress
+  - ts: 2026-02-23T05:49:16.605Z
+    who: "@claude-code"
+    action: completed
+    from: in_progress
+    to: done
 ```
 
 > First tile type. Visual: td_world_floor_pit.png. Behaviour: enemy overlaps pit → takeDamage(entity.hp) (instant kill) + particle burst. Pit stays active for scroll lifetime. Depends on D-01.
